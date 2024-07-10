@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-import { Routes } from './routes'
 import { AuthRoutes } from './routes/AuthRoutes'
 
 function App() {

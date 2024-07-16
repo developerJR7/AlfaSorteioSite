@@ -1,18 +1,11 @@
-import { AuthRoutes } from './routes/AuthRoutes'
+import React from 'react'
+import { RotasPublicas } from './routes/RotasPublicas'
 
-function App() {
-  //const { isAuthenticated, checkUserIsAuthenticated } = useAdm()
-
-  //useEffect(() => {
-  // checkUserIsAuthenticated()
-  // }, [])
-
+const App: React.FC = () => {
   return (
-    <>
-      {/*{isAuthenticated === true && <Routes />}
-      {isAuthenticated === false && <AuthRoutes />}*/}
-      <AuthRoutes />
-    </>
+    <div className="App">
+      <RotasPublicas />
+    </div>
   )
 }
 

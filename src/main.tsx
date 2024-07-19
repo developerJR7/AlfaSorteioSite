@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import { Toaster } from './components/ui/toaster.tsx'
 import './styles/global.css'
+import { UserProvider } from './contexts/UserContent.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } }
@@ -24,8 +25,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             />
           }
         >
-          <App />
-          <Toaster />
+          <UserProvider>
+            <App />
+            <Toaster />
+          </UserProvider>
         </Suspense>
       </QueryClientProvider>
     </React.StrictMode>

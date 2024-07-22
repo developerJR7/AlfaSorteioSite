@@ -36,7 +36,7 @@ module.exports = {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         colorPrimary: {
-          500: '#253161'
+          500: '#255E17'
         },
         colorSecondary: {
           500: '#C8D753'

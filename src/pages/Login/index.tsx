@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import MeninaAlfaSorteios from '@/assets/menina_alfa_sorteios.png'
 import { CardForLogin } from '@/components/layouts/card/cardforlogin'
 import { Button } from '@/components/ui/button'
@@ -9,6 +9,8 @@ import IconLock from '@/components/icons/Lock'
 import { toast } from '@/components/ui/use-toast'
 import AuthApi from '@/services/AuthApi'
 import { useAlfa } from '@/contexts/UserContent'
+import IconLeafClover from '@/components/icons/leafClover'
+import { Separator } from '@/components/ui/separator'
 
 const Welcome: React.FC = () => {
   const navigate = useNavigate()
@@ -69,8 +71,9 @@ const Welcome: React.FC = () => {
       </div>
       <div className="flex h-dvh w-3/5 items-center justify-center bg-white">
         <CardForLogin
-          title="Backoffice"
-          option={''}
+          title="Login"
+          option={'Acesse e comece a usar'}
+          logo={IconLeafClover}
           content={
             <div className="flex flex-col items-center gap-4">
               {ButtonsList.map(({ type, icon: Icon, title }, number) => (
@@ -93,21 +96,35 @@ const Welcome: React.FC = () => {
             </div>
           }
           footer={
-            <div className="flex items-end justify-end gap-4">
-              <label className="text-sm font-semibold text-colorPrimary-500">
-                Esqueci minha senha
-              </label>
-              <Button
-                className="rounded-lg bg-colorSecondary-500 px-8 py-6 text-xl font-semibold text-colorPrimary-500 transition-all duration-300 hover:text-white"
-                disabled={!isFormValid}
-                onClick={handleLogin}
-              >
-                {loading ? (
-                  <LoaderCircle className="h-10 w-10 animate-spin text-white transition-transform" />
-                ) : (
-                  'Acessar'
-                )}
-              </Button>
+            <div className="flex w-full flex-col gap-4">
+              <div className="flex flex-col items-end justify-end gap-4">
+                <label className="text-sm font-semibold text-colorPrimary-500">
+                  Esqueceu sua senha
+                </label>
+                <Button
+                  className="rounded-lg bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-12 py-6 text-xl font-semibold text-[#3D3D3D] transition-all duration-300 hover:text-white"
+                  disabled={!isFormValid}
+                  onClick={handleLogin}
+                >
+                  {loading ? (
+                    <LoaderCircle className="h-10 w-10 animate-spin text-white transition-transform" />
+                  ) : (
+                    'Login'
+                  )}
+                </Button>
+              </div>
+              <div className="flex flex-col items-center gap-2 ">
+                <Separator className=" mb-2 border-l border-[#A0AEC0]" />
+                <p className="text-sm text-[#A0AEC0]">
+                  Não possui conta?{' '}
+                  <Link
+                    className="text-sm font-semibold text-colorPrimary-500"
+                    to={'/register'}
+                  >
+                    Registra-se já
+                  </Link>
+                </p>
+              </div>
             </div>
           }
         />

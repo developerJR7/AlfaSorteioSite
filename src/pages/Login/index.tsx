@@ -65,8 +65,8 @@ const Welcome: React.FC = () => {
         <img
           src={MeninaAlfaSorteios}
           alt="foto da menina alfa sorteios"
-          height={629}
-          width={474}
+          height={300}
+          width={320}
         />
       </div>
       <div className="flex h-dvh w-3/5 items-center justify-center bg-white">

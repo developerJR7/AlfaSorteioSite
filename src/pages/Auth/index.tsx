@@ -33,34 +33,28 @@ const Welcome: React.FC = () => {
           <CardTitle>
             <div className="flex items-center gap-2">
               <div className="flex items-start gap-2">
-                <IconLeafClover className="size-8 fill-[#A0AEC0]" />
-                <h2 className="font-kanit m-0 flex  flex-col items-end p-0 text-3xl font-normal text-[#255E17] opacity-100">
-                  Alfa
-                  <span className="font-hubballi mt-[-8px] text-xs font-normal">
-                    Sorteios
-                  </span>
-                </h2>
+                <IconLeafClover className="size-20 fill-[#255E17]" />
               </div>
             </div>
-            <p className="font-Helvetica text-2xl font-bold text-[#255E17]">
+            <p className="font-Helvetica text-base font-bold text-[#255E17]">
               Seja bem-vindo(a)
             </p>
           </CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col justify-between gap-8">
-          <p className="font-Helvetica w-6/12 text-base font-normal text-black">
+        <CardContent className="flex flex-col justify-between gap-4">
+          <p className="font-Helvetica w-6/12 text-sm font-normal text-black">
             Aqui estão algumas das funcionalidades que você encontra na plataforma.
           </p>
           <div className="grid grid-cols-3 grid-rows-2">
             {CorrectPhase.map(({ text, title }) => (
               <div className="flex items-center justify-start gap-2">
                 <IconCorrectSign color="#A0AEC0" size={24} />
-                <span className=" text-base font-normal text-black">{text}</span>
-                <span className=" text-base font-semibold  text-black">{title}</span>
+                <span className=" text-xs font-normal text-black">{text}</span>
+                <span className=" text-xs font-semibold  text-black">{title}</span>
               </div>
             ))}
           </div>
-          <p className="text-base font-normal  text-black">
+          <p className="text-xs font-normal  text-black">
             Desfrute de uma experiência sem complicações com nossa plataforma, 100%
             intuitiva e fácil de usar. E quando precisar, conte com a nossa dedicada
             equipe de suporte, sempre pronta para ajudar você em cada passo do
@@ -69,10 +63,10 @@ const Welcome: React.FC = () => {
           <Separator className=" w-[52%] border-l border-[#A0AEC0]" />
         </CardContent>
         <CardFooter className="flex flex-col items-start">
-          <p className="font-Helvetica text-2xl font-bold  text-[#255E17]">
+          <p className="font-Helvetica text-base font-bold  text-[#255E17]">
             Comece agora!
           </p>
-          <p className=" text-base font-normal  text-black">
+          <p className=" text-xs font-normal  text-black">
             Faça seu{' '}
             <button className="font-bold text-black underline" onClick={handleLogin}>
               Login

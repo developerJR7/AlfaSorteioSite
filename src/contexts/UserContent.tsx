@@ -45,7 +45,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     setToken(token)
     localStorage.setItem('alfasorteios_token', token)
     setTimeout(() => {
-      navigate('/', { replace: true })
+      navigate('/home', { replace: true })
     }, 500)
   }
 

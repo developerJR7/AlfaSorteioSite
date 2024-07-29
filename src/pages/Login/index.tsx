@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import MeninaAlfaSorteios from '@/assets/menina_alfa_sorteios.png'
-import { CardForLogin } from '@/components/layouts/card/cardforlogin'
+import { CardForLogin } from '@/components/layout/card/cardLogin'
 import { Button } from '@/components/ui/button'
 import { LoaderCircle } from 'lucide-react'
 import UserCircle from '@/components/icons/UserCicle'

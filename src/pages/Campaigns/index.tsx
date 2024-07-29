@@ -1,11 +1,11 @@
 import { Container } from '@/components/layout/container'
 
-const Home: React.FC = () => {
+const Campanha: React.FC = () => {
   return (
     <Container>
-      <h2>Home</h2>
+      <h2>Campanha</h2>
     </Container>
   )
 }
 
-export default Home
+export default Campanha

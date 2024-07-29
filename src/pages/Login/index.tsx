@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import MeninaAlfaSorteios from '@/assets/menina_alfa_sorteios.png'
 import { CardForLogin } from '@/components/layouts/card/cardforlogin'
 import { Button } from '@/components/ui/button'
@@ -7,15 +7,15 @@ import { LoaderCircle } from 'lucide-react'
 import UserCircle from '@/components/icons/UserCicle'
 import IconLock from '@/components/icons/Lock'
 import { toast } from '@/components/ui/use-toast'
-import AuthApi from '@/services/AuthApi'
 import { useAlfa } from '@/contexts/UserContent'
 import IconLeafClover from '@/components/icons/leafClover'
 import { Separator } from '@/components/ui/separator'
+import useLogin from '@/hooks/useAuth'
+import { UserTypes } from '@/types/userTypes'
 
 const Welcome: React.FC = () => {
-  const navigate = useNavigate()
   const { signIn } = useAlfa()
-  const [loading, setLoading] = useState<boolean>(false)
+  const { mutate: login, isLoading } = useLogin()
   const [state, setState] = useState<{ email: string; pwd: string }>({
     email: '',
     pwd: ''
@@ -37,28 +37,26 @@ const Welcome: React.FC = () => {
   const isFormValid = Object.values(state).every((value) => value.trim() !== '')
 
   const handleLogin = async () => {
-    setLoading(true)
-    await AuthApi.login({ ...state })
-      .then((res: any) => {
-        setState((prev) => ({
-          ...prev,
-          stepPage: 0
-        }))
-        signIn(res.key)
-        navigate('/')
-      })
-      .catch((e: any) => {
-        toast({
-          variant: 'destructive',
-          title: e.response?.data?.error,
-          description: 'repita o processo.'
-        })
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+    login(
+      { ...state },
+      {
+        onSuccess: (res: UserTypes) => {
+          toast({
+            variant: 'success',
+            title: 'Login efetuado com sucesso!'
+          })
+          signIn(res.key)
+        },
+        onError: (error: any) => {
+          toast({
+            variant: 'destructive',
+            title: error.response?.data?.error,
+            description: 'repita o processo.'
+          })
+        }
+      }
+    )
   }
-
   return (
     <div className="flex justify-between">
       <div className="flex h-dvh w-2/5 items-end justify-center">
@@ -103,10 +101,10 @@ const Welcome: React.FC = () => {
                 </label>
                 <Button
                   className="rounded-lg bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-12 py-6 text-xl font-semibold text-[#3D3D3D] transition-all duration-300 hover:text-white"
-                  disabled={!isFormValid}
+                  disabled={!isFormValid || isLoading}
                   onClick={handleLogin}
                 >
-                  {loading ? (
+                  {isLoading ? (
                     <LoaderCircle className="h-10 w-10 animate-spin text-white transition-transform" />
                   ) : (
                     'Login'

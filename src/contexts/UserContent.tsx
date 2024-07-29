@@ -1,3 +1,4 @@
+import { UserTypes } from '@/types/userTypes'
 import {
   Dispatch,
   ReactNode,
@@ -9,8 +10,8 @@ import {
 import { useNavigate } from 'react-router-dom'
 
 interface UserContextData {
-  user: Alfa.UserProps
-  setUser: Dispatch<SetStateAction<Alfa.UserProps>>
+  user: UserTypes
+  setUser: Dispatch<SetStateAction<UserTypes>>
   isAuthenticated: boolean | undefined
   token: string
   signIn: (token: string) => void
@@ -28,13 +29,14 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const navigate = useNavigate()
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>()
   const [token, setToken] = useState<string>('')
-  const [user, setUser] = useState<Alfa.UserProps>({
+  const [user, setUser] = useState<UserTypes>({
     name: '',
     id: 0,
     created: '',
     doc: '',
     status: '',
-    type: ''
+    type: '',
+    key: ''
   })
 
   const signIn = (token: string) => {
@@ -42,6 +44,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
     setToken(token)
     localStorage.setItem('alfasorteios_token', token)
+    setTimeout(() => {
+      navigate('/', { replace: true })
+    }, 500)
   }
 
   const signOut = () => {

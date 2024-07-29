@@ -17,6 +17,7 @@ import {
   CommandList,
   CommandItem
 } from '@/components/ui/command'
+import ImageHomemAlfaSorteios from '@/assets/homem_alfa_sorteios.png'
 
 interface DDIProps {
   pais: string
@@ -37,7 +38,7 @@ const Register: React.FC = () => {
   }>({ name: '', email: '', pwd: '', phone: '' })
 
   const cardStyle = {
-    backgroundImage: "url('./src/assets/homem_alfa_sorteios.png')",
+    backgroundImage: `url('${ImageHomemAlfaSorteios}')`,
     backgroundColor: 'white',
     backgroundRepeat: 'no-repeat',
     backgroundSize: '30%',
@@ -104,11 +105,6 @@ const Register: React.FC = () => {
                 }))
               }
             />
-            <Input
-              type="password"
-              placeholder="Repita sua senha"
-              className="text-xs"
-            />
             <div className="flex items-center gap-1">
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
@@ -155,7 +151,7 @@ const Register: React.FC = () => {
                 onChange={(e) =>
                   setStepRegister((prevState) => ({
                     ...prevState,
-                    cel: e.target.value
+                    phone: e.target.value
                   }))
                 }
               />

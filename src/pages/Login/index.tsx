@@ -10,8 +10,7 @@ import { toast } from '@/components/ui/use-toast'
 import { useAlfa } from '@/contexts/UserContent'
 import IconLeafClover from '@/components/icons/leafClover'
 import { Separator } from '@/components/ui/separator'
-import useLogin from '@/hooks/useAuth'
-import { UserTypes } from '@/types/userTypes'
+import { useLogin } from '@/hooks/useAuth'
 
 const Welcome: React.FC = () => {
   const { signIn } = useAlfa()
@@ -40,23 +39,25 @@ const Welcome: React.FC = () => {
     login(
       { ...state },
       {
-        onSuccess: (res: UserTypes) => {
+        onSuccess: (res: { key: string }) => {
           toast({
             variant: 'success',
             title: 'Login efetuado com sucesso!'
           })
           signIn(res.key)
         },
-        onError: (error: any) => {
+        onError: (error) => {
+          console.error(error)
           toast({
             variant: 'destructive',
-            title: error.response?.data?.error,
-            description: 'repita o processo.'
+            title: 'Erro ao realizar login',
+            description: 'Por favor, verifique suas credenciais e tente novamente.'
           })
         }
       }
     )
   }
+
   return (
     <div className="flex justify-between">
       <div className="flex h-dvh w-2/5 items-end justify-center">

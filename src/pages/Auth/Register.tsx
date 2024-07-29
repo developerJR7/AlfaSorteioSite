@@ -18,6 +18,8 @@ import {
   CommandItem
 } from '@/components/ui/command'
 import ImageHomemAlfaSorteios from '@/assets/homem_alfa_sorteios.png'
+import { useRegister } from '@/hooks/useAuth'
+import { toast } from '@/components/ui/use-toast'
 
 interface DDIProps {
   pais: string
@@ -27,7 +29,7 @@ interface DDIProps {
 }
 
 const Register: React.FC = () => {
-  const [loading] = useState<boolean>(false)
+  const { mutate: register, isLoading: loadingRegister } = useRegister()
   const [open, setOpen] = useState<boolean>(false)
   const [checked, setChecked] = useState<boolean>(false)
   const [stepRegister, setStepRegister] = useState<{
@@ -52,6 +54,28 @@ const Register: React.FC = () => {
     const res = await api.get('https://api-paises.pages.dev/paises.json')
     return res.data
   })
+
+  const handleRegister = async () => {
+    register(
+      { ...stepRegister },
+      {
+        onSuccess: () => {
+          toast({
+            variant: 'success',
+            title: 'Registro efetuado com sucesso!'
+          })
+        },
+        onError: (error) => {
+          console.error(error)
+          toast({
+            variant: 'destructive',
+            title: 'Erro ao registrar',
+            description: 'Por favor, tente novamente.'
+          })
+        }
+      }
+    )
+  }
 
   return (
     <div className="flex h-screen w-screen items-center justify-center overflow-x-hidden p-14">
@@ -177,10 +201,10 @@ const Register: React.FC = () => {
               <Link to={'/login'}> {`< Fazer Login `}</Link>
               <Button
                 className="rounded-lg bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-4 py-2  font-semibold text-[#3D3D3D] transition-all duration-300 hover:text-white"
-                disabled={!checked}
-                //onClick={handleLogin}
+                disabled={!checked || loadingRegister}
+                onClick={handleRegister}
               >
-                {loading ? (
+                {loadingRegister ? (
                   <LoaderCircle className="h-10 w-10 animate-spin text-white transition-transform" />
                 ) : (
                   'Registrar-se'

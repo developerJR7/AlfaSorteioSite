@@ -1,18 +1,17 @@
 import md5 from 'md5'
 import { api } from '../api/Api'
 import { useMutation } from 'react-query'
-import { UserTypes } from '@/types/userTypes'
-import { Phone } from 'lucide-react'
 
 const useLogin = () => {
   return useMutation(async ({ email, pwd }: { email: string; pwd: string }) => {
-    const { data } = await api.post<UserTypes>('/actions/login', {
+    const { data } = await api.post<{ key: string }>('/actions/login', {
       email,
       pwd: md5(pwd)
     })
     return data
   })
 }
+
 const useRegister = () => {
   return useMutation(
     async ({
@@ -23,11 +22,13 @@ const useRegister = () => {
     }: {
       name: string
       email: string
-      Phone: string
+      phone: string
       pwd: string
     }) => {
-      const { data } = await api.post<UserTypes>('/actions/register', {
+      const { data } = await api.post('/actions/register', {
+        name,
         email,
+        phone,
         pwd: md5(pwd)
       })
       return data
@@ -35,4 +36,4 @@ const useRegister = () => {
   )
 }
 
-export default { useLogin, useRegister }
+export { useLogin, useRegister }

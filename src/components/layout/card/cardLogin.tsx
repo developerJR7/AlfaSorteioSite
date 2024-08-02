@@ -1,4 +1,4 @@
-import { IconProps } from '@/components/icons/leafClover'
+import { IconProps } from '@/components/icons/LeaftClover'
 import {
   Card,
   CardContent,

@@ -8,7 +8,7 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import IconLeafClover from '@/components/icons/leafClover'
+import IconLeafClover from '@/components/icons/LeaftClover'
 import IconCorrectSign from '@/components/icons/CorrectSign'
 
 const Welcome: React.FC = () => {

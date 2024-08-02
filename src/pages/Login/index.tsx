@@ -8,7 +8,7 @@ import UserCircle from '@/components/icons/UserCicle'
 import IconLock from '@/components/icons/Lock'
 import { toast } from '@/components/ui/use-toast'
 import { useAlfa } from '@/contexts/UserContent'
-import IconLeafClover from '@/components/icons/leafClover'
+import IconLeafClover from '@/components/icons/LeaftClover'
 import { Separator } from '@/components/ui/separator'
 import { useLogin } from '@/hooks/useAuth'
 

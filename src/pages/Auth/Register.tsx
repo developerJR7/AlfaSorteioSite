@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import IconLeafClover from '@/components/icons/leafClover'
+import IconLeafClover from '@/components/icons/LeaftClover'
 import { ChevronDown, LoaderCircle } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'

@@ -6,14 +6,14 @@ import { Navigate, Routes as ReactRoutes, Route } from 'react-router-dom'
 
 export const RotasPrivadas: React.FC = () => {
   return (
-    <div className="flex max-h-[100vh] w-full max-w-[1440px] items-center justify-around">
+    <div className="flex max-h-dvh w-full max-w-[1440px] items-start justify-around">
       <Sidebar />
       <ReactRoutes>
         {/* Home */}
-        <Route path="*" element={<Navigate to="/home" />} />
         <Route path="/home" Component={Home} />
         {/* Campaigns */}
         <Route path="/campaigns" Component={Campanha} />
+        <Route path="*" element={<Navigate to="/home" />} />
       </ReactRoutes>
     </div>
   )

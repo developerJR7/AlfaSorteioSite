@@ -1,5 +1,3 @@
-import { IconTicket } from '@/components/icons'
-import { Container } from '@/components/layout/container'
 const configcampaigns: React.FC = () => {
   return (
     <>

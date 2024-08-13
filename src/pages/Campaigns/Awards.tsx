@@ -1,6 +1,3 @@
-import { IconTicket } from '@/components/icons'
-import { Container } from '@/components/layout/container'
-
 const Awards: React.FC = () => {
   return (
     <>

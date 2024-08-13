@@ -1,4 +1,3 @@
-import { Container } from '@/components/layout/container'
 const InfoCampaings: React.FC = () => {
   return (
     <>

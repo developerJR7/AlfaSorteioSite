@@ -1,5 +1,3 @@
-import { Container } from '@/components/layout/container'
-
 const CampaignsReview: React.FC = () => {
   return (
     <>

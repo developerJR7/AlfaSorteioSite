@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import IconLeafClover from '@/components/icons/LeaftClover'
@@ -48,7 +48,7 @@ const Register: React.FC = () => {
   }
 
   const isFormValid = Object.entries(stepRegister).every(([, value]) => value !== '')
-  //useEffect(() => console.log(checked, stepRegister), [checked, stepRegister])
+  useEffect(() => console.log(checked, stepRegister), [checked, stepRegister])
 
   const { data: DDI, isLoading } = useQuery<DDIProps[]>('list-DDI', async () => {
     const res = await api.get('/user/country_codes')

@@ -1,6 +1,7 @@
 import { IconTicket } from '@/components/icons'
 import { Container } from '@/components/layout/container'
-const configcampaigns: React.FC = () => {
+
+const Awards: React.FC = () => {
   return (
     <>
       <h4 className="mb-4 flex items-center text-xl font-semibold text-[#255E17]">
@@ -15,4 +16,4 @@ const configcampaigns: React.FC = () => {
   )
 }
 
-export default configcampaigns
+export default Awards

@@ -1,5 +1,6 @@
 import { Sidebar } from '@/components/layout/sidebar'
 import Campanha from '@/pages/Campaigns'
+import Create from '@/pages/Campaigns/Create'
 import Home from '@/pages/Home'
 import React from 'react'
 import { Navigate, Routes as ReactRoutes, Route } from 'react-router-dom'
@@ -12,7 +13,10 @@ export const RotasPrivadas: React.FC = () => {
         {/* Home */}
         <Route path="/home" Component={Home} />
         {/* Campaigns */}
-        <Route path="/campaigns" Component={Campanha} />
+        <Route path="campaigns">
+          <Route index Component={Campanha} />
+          <Route path="create" Component={Create} />
+        </Route>
         <Route path="*" element={<Navigate to="/home" />} />
       </ReactRoutes>
     </div>

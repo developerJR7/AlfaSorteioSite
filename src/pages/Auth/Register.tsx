@@ -51,7 +51,7 @@ const Register: React.FC = () => {
   //useEffect(() => console.log(checked, stepRegister), [checked, stepRegister])
 
   const { data: DDI, isLoading } = useQuery<DDIProps[]>('list-DDI', async () => {
-    const res = await api.get('https://api-paises.pages.dev/paises.json')
+    const res = await api.get('/user/country_codes')
     return res.data
   })
 

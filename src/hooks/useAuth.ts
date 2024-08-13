@@ -8,6 +8,7 @@ const useLogin = () => {
       email,
       pwd: md5(pwd)
     })
+    console.log('API Response:', data)
     return data
   })
 }

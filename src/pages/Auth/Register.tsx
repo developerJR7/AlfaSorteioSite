@@ -142,7 +142,7 @@ const Register: React.FC = () => {
                       ? '...'
                       : DDI &&
                         Object.values(DDI)
-                          .filter(({ pais }) => pais === 'Brasil')
+                          .filter(({ pais }) => pais === 'Brazil')
                           .map(({ img, pais }) => (
                             <>
                               <img

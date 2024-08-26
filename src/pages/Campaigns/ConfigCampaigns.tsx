@@ -10,10 +10,10 @@ const ConfigCampaigns: React.FC = () => {
     maxCotas: '',
     selectOption1: 'Option1',
     selectOption2: 'Option1',
-    promoteAffiliates: 'Option1'
+    promoteAffiliates: 'Option1',
+    enabled1: false,
+    enabled2: false
   })
-  const [enabled1, setEnabled1] = useState(false)
-  const [enabled2, setEnabled2] = useState(false)
 
   const handlePromoteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCampaignInfo((prevState) => ({
@@ -25,7 +25,6 @@ const ConfigCampaigns: React.FC = () => {
   return (
     <>
       <div className="grid grid-cols-2 gap-8">
-        {/* Campos existentes */}
         <div className="flex flex-col gap-1">
           <label className="text-xs font-bold text-black">Quantidade de Cotas</label>
           <Input
@@ -153,44 +152,53 @@ const ConfigCampaigns: React.FC = () => {
             />
           </div>
         </div>
-        <div className="flex gap-4">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-4">
+          <label className="text-xs font-bold text-black">Data do Sorteio</label>
+          <div className="flex items-center justify-center gap-2">
             <Switch
-              checked={enabled1}
-              onChange={setEnabled1}
+              checked={campaignInfo.enabled1}
+              onChange={() => {
+                setCampaignInfo((prevState) => ({
+                  ...prevState,
+                  enabled1: !prevState.enabled1
+                }))
+              }}
               className={`relative inline-flex h-6 w-11 cursor-pointer rounded-full border-2 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-                enabled1 ? 'bg-green-500' : 'bg-red-500'
+                campaignInfo.enabled1 ? 'bg-green-500' : 'bg-red-500'
               }`}
             >
               <span className="sr-only">Toggle 1</span>
               <span
                 aria-hidden="true"
                 className={`inline-block h-5 w-5 transform rounded-full bg-white transition duration-200 ease-in-out ${
-                  enabled1 ? 'translate-x-5' : 'translate-x-0'
+                  campaignInfo.enabled1 ? 'translate-x-5' : 'translate-x-0'
                 }`}
               />
             </Switch>
-            <label className="translate-y-1 text-xs font-bold text-black">
+            <label className="translate-y-1 text-xs text-gray-600">
               Informar a data do sorteio
             </label>
-          </div>
-          <div className="flex items-center gap-2">
             <Switch
-              checked={enabled2}
-              onChange={setEnabled2}
+              checked={campaignInfo.enabled2}
+              onChange={() => {
+                setCampaignInfo((prevState) => ({
+                  ...prevState,
+                  enabled2: !prevState.enabled2
+                }))
+              }}
               className={`relative inline-flex h-6 w-11 cursor-pointer rounded-full border-2 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-                enabled2 ? 'bg-green-500' : 'bg-red-500'
+                campaignInfo.enabled2 ? 'bg-green-500' : 'bg-red-500'
               }`}
             >
               <span className="sr-only">Toggle 2</span>
               <span
                 aria-hidden="true"
                 className={`inline-block h-5 w-5 transform rounded-full bg-white transition duration-200 ease-in-out ${
-                  enabled2 ? 'translate-x-5' : 'translate-x-0'
+                  campaignInfo.enabled2 ? 'translate-x-5' : 'translate-x-0'
                 }`}
               />
             </Switch>
-            <label className="translate-y-1 text-xs font-bold text-black">
+            <label className="translate-y-1 text-xs text-gray-600">
               Regras para definir a data
             </label>
           </div>

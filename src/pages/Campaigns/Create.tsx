@@ -4,6 +4,9 @@ import { Container } from '@/components/layout/container'
 import { Stepper } from './stepper'
 import ConfigCampaigns from './ConfigCampaigns'
 import InfoCampaigns from './InfoCampaigns'
+import Awards from './Awards'
+import CampaignsReview from './CampaignsReview'
+import CampaignsSuccess from './CampaignsSuccess'
 
 const Create: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1)
@@ -26,6 +29,12 @@ const Create: React.FC = () => {
         return <InfoCampaigns />
       case 2:
         return <ConfigCampaigns />
+      case 3:
+        return <Awards />
+      case 4:
+        return <CampaignsReview />
+      case 5:
+        return <CampaignsSuccess />
       default:
         return null
     }

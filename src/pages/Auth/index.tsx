@@ -28,7 +28,7 @@ const Welcome: React.FC = () => {
 
   return (
     <div className="flex h-screen w-screen items-center justify-center overflow-x-hidden p-14">
-      <Card className="h-5/6 max-h-[514px] w-9/12">
+      <Card className="h-5/6 max-h-[514px] w-9/12 max-w-[1440px]">
         <CardHeader>
           <CardTitle>
             <div className="flex items-center gap-2">

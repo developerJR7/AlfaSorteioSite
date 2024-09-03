@@ -1,94 +1,60 @@
 import { cn } from '@/lib/utils'
 
 interface StepperProps {
-  color: string
   currentStep: number
   stepsControl: {
     number: number
-    href: string
-    status: string
     text: string
   }[]
 }
 
-export const Stepper: React.FC<StepperProps> = ({
-  color,
-  currentStep,
-  stepsControl
-}) => {
+export const Stepper: React.FC<StepperProps> = ({ currentStep, stepsControl }) => {
+  const calcProgressBefore = (current: number, total: number): string => {
+    const cl = (current / total) * 100
+    return `before:w-[${cl}%]`
+  }
+
   return (
-    <nav aria-label="Progress">
-      <ol role="list" className="flex items-center">
-        {stepsControl.map((step, stepIdx) => (
-          <li
-            key={stepIdx}
-            className={cn(
-              stepIdx !== stepsControl.length - 1 ? 'pr-8 sm:pr-20' : '',
-              'relative'
-            )}
+    <nav className="relative m-auto mb-12 flex w-9/12 items-center justify-between">
+      {stepsControl.map(({ text, number }, index) => (
+        <>
+          {index < stepsControl.length - 1 && (
+            <div
+              className={cn(
+                'absolute top-[50%] w-full transform border-[1px] border-dashed before:absolute before:top-[50%] before:z-[11] before:block before:w-[0px] before:border-[1px] before:border-dashed',
+                currentStep > 1 && 'before:border-[#255E17]',
+                calcProgressBefore(currentStep - 1, stepsControl.length - 1)
+              )}
+            />
+          )}
+          <div
+            key={index}
+            className="z-10 flex w-fit flex-col items-center justify-center gap-2"
           >
-            {step.number < currentStep ? (
-              <>
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 flex items-center"
-                >
-                  <div className={cn('h-0.5 w-full', color)} />
-                </div>
-                <a
-                  href="#"
-                  className={cn(
-                    'relative flex h-8 w-8 items-center justify-center rounded-full text-white ',
-                    color
-                  )}
-                >
-                  {step.number}
-                  <span className="sr-only">{step.text}</span>
-                </a>
-              </>
-            ) : step.number === currentStep ? (
-              <div>
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 flex items-center"
-                >
-                  <div className="h-0.5 w-full bg-gray-200" />
-                </div>
-                <a
-                  href="#"
-                  aria-current="step"
-                  className={cn(
-                    'relative flex h-8 w-8 items-center justify-center rounded-full text-white ',
-                    color
-                  )}
-                >
-                  <span className="">{step.number}</span>
-                </a>
-                {/* <h2 className="absolute bottom-0 w-14 text-xs">{step.text}</h2> */}
-              </div>
-            ) : (
-              <>
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 flex items-center"
-                >
-                  <div className="h-0.5 w-full bg-gray-200" />
-                </div>
-                <a
-                  href="#"
-                  className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-white hover:border-gray-400"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300"
-                  />
-                  <span className="sr-only">{step.text}</span>
-                </a>
-              </>
-            )}
-          </li>
-        ))}
-      </ol>
+            <div
+              className={cn(
+                'grid size-14 cursor-default place-items-center rounded-full border-2  text-xl font-bold transition-all duration-200 ease-in-out',
+                number > currentStep &&
+                  'border-[#A0AEC0] bg-[#F1F5F9] text-[#A0AEC0]',
+                number < currentStep && 'border-[#255E17] bg-[#255E17] text-white',
+                number === currentStep &&
+                  'border-[#255E17] bg-[#B4FFA1] text-[#255E17]'
+              )}
+            >
+              {number}
+            </div>
+            <label
+              htmlFor=""
+              className={cn(
+                'absolute bottom-[-38px] h-8 w-32 text-center text-xs font-medium text-[#A0AEC0]',
+                number === currentStep && 'text-[#255E17]'
+              )}
+            >
+              {text}
+            </label>
+          </div>
+        </>
+      ))}
     </nav>
   )
 }

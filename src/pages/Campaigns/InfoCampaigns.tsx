@@ -171,14 +171,6 @@ const InfoCampaigns: React.FC = () => {
           className="h-40 bg-white text-xs shadow-sm"
         />
       </div>
-      <div className="mt-4 flex items-center justify-between">
-        <span className="text-xs font-bold text-black">
-          Não cobramos taxas de publicação.
-        </span>
-        <Button className="ml-4" disabled={!isFormValid} onClick={handleSave}>
-          Avançar
-        </Button>
-      </div>
     </div>
   )
 }

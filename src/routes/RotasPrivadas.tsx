@@ -7,7 +7,7 @@ import { Navigate, Routes as ReactRoutes, Route } from 'react-router-dom'
 
 export const RotasPrivadas: React.FC = () => {
   return (
-    <div className="flex max-h-dvh w-full max-w-[1440px] items-start justify-around">
+    <div className="flex max-h-dvh w-full items-start bg-[#F1F5F9] ">
       <Sidebar />
       <ReactRoutes>
         {/* Home */}

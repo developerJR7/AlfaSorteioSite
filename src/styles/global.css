@@ -64,9 +64,10 @@
   input {
     outline: 0;
   }
+  
 }
 
-@layer base {
+@layer base {  
   * {
     @apply border-border;
   }

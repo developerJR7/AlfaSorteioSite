@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import IconLeafClover from '@/components/icons/LeaftClover'
@@ -38,17 +38,14 @@ const Register: React.FC = () => {
     pwd: string
     phone: string
   }>({ name: '', email: '', pwd: '', phone: '' })
-
-  const cardStyle = {
-    backgroundImage: `url('${ImageHomemAlfaSorteios}')`,
-    backgroundColor: 'white',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: '30%',
-    backgroundPosition: '12% bottom'
-  }
+  const [selectedDDI, setSelectedDDI] = useState<DDIProps>({
+    pais: 'Brasil',
+    img: 'https://alphasorteios.site/country_codes/w2560/br.png',
+    ddi: 55,
+    continente: 'América do Sul'
+  })
 
   const isFormValid = Object.entries(stepRegister).every(([, value]) => value !== '')
-  useEffect(() => console.log(checked, stepRegister), [checked, stepRegister])
 
   const { data: DDI, isLoading } = useQuery<DDIProps[]>('list-DDI', async () => {
     const res = await api.get('/user/country_codes')
@@ -79,7 +76,16 @@ const Register: React.FC = () => {
 
   return (
     <div className="flex h-screen w-screen items-center justify-center overflow-x-hidden p-14">
-      <Card className="h-5/6 max-h-[453px] w-9/12 bg-white" style={cardStyle}>
+      <Card
+        className="h-5/6 max-h-[453px] w-9/12 bg-white"
+        style={{
+          backgroundImage: `url('${ImageHomemAlfaSorteios}')`,
+          backgroundColor: 'white',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: '30%',
+          backgroundPosition: '12% bottom'
+        }}
+      >
         <CardTitle className="flex justify-center py-6">
           <IconLeafClover className="w-24 fill-[#255E17]" />
         </CardTitle>
@@ -98,10 +104,7 @@ const Register: React.FC = () => {
               placeholder="Nome completo"
               value={stepRegister.name}
               onChange={(e) =>
-                setStepRegister((prevState) => ({
-                  ...prevState,
-                  name: e.target.value
-                }))
+                setStepRegister((prev) => ({ ...prev, name: e.target.value }))
               }
               className="text-xs"
             />
@@ -111,10 +114,7 @@ const Register: React.FC = () => {
               className="text-xs"
               value={stepRegister.email}
               onChange={(e) =>
-                setStepRegister((prevState) => ({
-                  ...prevState,
-                  email: e.target.value
-                }))
+                setStepRegister((prev) => ({ ...prev, email: e.target.value }))
               }
             />
             <Input
@@ -123,45 +123,54 @@ const Register: React.FC = () => {
               className="text-xs"
               value={stepRegister.pwd}
               onChange={(e) =>
-                setStepRegister((prevState) => ({
-                  ...prevState,
-                  pwd: e.target.value
-                }))
+                setStepRegister((prev) => ({ ...prev, pwd: e.target.value }))
               }
             />
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                   <Button
-                    role="combobox"
-                    aria-expanded={open}
-                    variant={'outline'}
-                    className="flex w-2/12 items-center justify-between gap-2 px-2"
+                    variant="outline"
+                    className="flex items-center justify-between gap-2 px-2 text-black"
                   >
-                    {isLoading && DDI === undefined
-                      ? '...'
-                      : DDI &&
-                        Object.values(DDI)
-                          .filter(({ pais }) => pais === 'Brazil')
-                          .map(({ img, pais }) => (
-                            <>
-                              <img
-                                src={img}
-                                alt={`bandeira do país ${pais}`}
-                                className="w-8 object-contain"
-                              />
-                              <ChevronDown className="w-8 text-gray-400" />
-                            </>
-                          ))}
+                    {isLoading ? (
+                      '...'
+                    ) : (
+                      <>
+                        <img
+                          src={selectedDDI.img}
+                          alt={`bandeira do país ${selectedDDI.pais}`}
+                          className="h-5 w-8 object-contain"
+                        />
+                        {`+${selectedDDI.ddi}`}
+                        <ChevronDown className="h-4 w-4 text-gray-400" />
+                      </>
+                    )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent>
+                <PopoverContent className="w-[200px] p-0">
                   <Command>
                     <CommandInput placeholder="Pesquise pelo DDI" />
                     <CommandList>
                       <CommandEmpty>Nenhum DDI listado.</CommandEmpty>
                       <CommandGroup>
-                        <CommandItem></CommandItem>
+                        {DDI?.map((item) => (
+                          <CommandItem
+                            key={item.ddi}
+                            onSelect={() => {
+                              setSelectedDDI(item) // Atualiza o DDI selecionado
+                              setOpen(false) // Fecha o popover após a seleção
+                            }}
+                            className="flex cursor-pointer items-center gap-2"
+                          >
+                            <img
+                              src={item.img}
+                              alt={`bandeira do país ${item.pais}`}
+                              className="h-5 w-8 object-contain"
+                            />
+                            <span>{`+${item.ddi}`}</span>
+                          </CommandItem>
+                        ))}
                       </CommandGroup>
                     </CommandList>
                   </Command>
@@ -173,10 +182,7 @@ const Register: React.FC = () => {
                 className="text-xs"
                 value={stepRegister.phone}
                 onChange={(e) =>
-                  setStepRegister((prevState) => ({
-                    ...prevState,
-                    phone: e.target.value
-                  }))
+                  setStepRegister((prev) => ({ ...prev, phone: e.target.value }))
                 }
               />
             </div>
@@ -198,9 +204,9 @@ const Register: React.FC = () => {
               </label>
             </div>
             <div className="flex items-center justify-between">
-              <Link to={'/login'}> {`< Fazer Login `}</Link>
+              <Link to={'/login'}>{`< Fazer Login `}</Link>
               <Button
-                className="rounded-lg bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-4 py-2  font-semibold text-[#3D3D3D] transition-all duration-300 hover:text-white"
+                className="rounded-lg bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-4 py-2 font-semibold text-[#3D3D3D] transition-all duration-300 hover:text-white"
                 disabled={!checked || loadingRegister}
                 onClick={handleRegister}
               >

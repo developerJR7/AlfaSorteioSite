@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
@@ -24,6 +24,7 @@ interface DDIProps {
 
 const InfoCampaigns: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false)
+  const [selectedDDI, setSelectedDDI] = useState<DDIProps | null>(null)
   const [campaignInfo, setCampaignInfo] = useState<{
     name: string
     headline: string
@@ -44,6 +45,15 @@ const InfoCampaigns: React.FC = () => {
     const res = await api.get('/user/country_codes')
     return res.data
   })
+
+  useEffect(() => {
+    if (DDI && !selectedDDI) {
+      const brazilDDI = DDI.find(({ pais }) => pais === 'Brasil')
+      if (brazilDDI) {
+        setSelectedDDI(brazilDDI)
+      }
+    }
+  }, [DDI])
 
   const handleSave = async () => {}
 
@@ -93,21 +103,18 @@ const InfoCampaigns: React.FC = () => {
                   variant={'outline'}
                   className="flex w-2/12 items-center justify-between gap-2 px-2"
                 >
-                  {isLoading && DDI === undefined
+                  {isLoading && !selectedDDI
                     ? '...'
-                    : DDI &&
-                      Object.values(DDI)
-                        .filter(({ pais }) => pais === 'Brasil')
-                        .map(({ img, pais }) => (
-                          <>
-                            <img
-                              src={img}
-                              alt={`bandeira do país ${pais}`}
-                              className="w-8 object-contain"
-                            />
-                            <ChevronDown className="w-8 text-gray-400" />
-                          </>
-                        ))}
+                    : selectedDDI && (
+                        <>
+                          <img
+                            src={selectedDDI.img}
+                            alt={`bandeira do país ${selectedDDI.pais}`}
+                            className="w-8 object-contain"
+                          />
+                          <ChevronDown className="w-8 text-gray-400" />
+                        </>
+                      )}
                 </Button>
               </PopoverTrigger>
               <PopoverContent>
@@ -119,7 +126,20 @@ const InfoCampaigns: React.FC = () => {
                   <CommandList>
                     <CommandEmpty>Nenhum DDI listado.</CommandEmpty>
                     <CommandGroup>
-                      <CommandItem></CommandItem>
+                      {DDI &&
+                        DDI.map((ddiItem) => (
+                          <CommandItem
+                            key={ddiItem.ddi}
+                            onSelect={() => setSelectedDDI(ddiItem)}
+                          >
+                            <img
+                              src={ddiItem.img}
+                              alt={`bandeira do país ${ddiItem.pais}`}
+                              className="w-8 object-contain"
+                            />
+                            <span className="ml-2">{ddiItem.pais}</span>
+                          </CommandItem>
+                        ))}
                     </CommandGroup>
                   </CommandList>
                 </Command>
@@ -160,7 +180,7 @@ const InfoCampaigns: React.FC = () => {
           Descrição da Campanha*
         </label>
         <Textarea
-          placeholder="As cotas são liberadas após a confirmação do pagamento. A Data do sorteio será divulgado quando obter 70% das cotas vendidas."
+          placeholder="As cotas são liberadas após a confirmação do pagamento. A Data do sorteio será divulgada quando obter 70% das cotas vendidas."
           value={campaignInfo.description}
           onChange={(e) =>
             setCampaignInfo((prevState) => ({

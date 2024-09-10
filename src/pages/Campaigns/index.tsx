@@ -4,10 +4,59 @@ import { Container } from '@/components/layout/container'
 import { Card } from '@/components/ui/card'
 import IconLupa from '@/components/icons/Lupa'
 import { Link } from 'react-router-dom'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
+import { listCampaigns, createCampaign, updateCampaign } from '@/hooks/campaingsApi'
+import { DataTable } from '@/components/Table'
+import { ColumnsCampaigns } from './ColumnsCampaign'
+
+type Campaign = {
+  id: string
+  name: string
+  status: 'andamento' | 'encerradas'
+}
 
 const Campanha: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'andamento' | 'encerradas'>('andamento')
-  //const { data, isLoading, isError } = useListCampaigns()
+  const queryClient = useQueryClient()
+
+  const {
+    data: infoCampaigns,
+    isLoading,
+    isError
+  } = useQuery<App.campaignsProps[]>({
+    queryKey: 'campaigns',
+    queryFn: async () => {
+      const res = await listCampaigns()
+      return res
+    }
+  })
+
+  const createMutation = useMutation(createCampaign, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('campaigns')
+    }
+  })
+
+  const updateMutation = useMutation(
+    ({ campaignId, campaignData }: { campaignId: string; campaignData: any }) =>
+      updateCampaign(campaignId, campaignData),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('campaigns')
+      }
+    }
+  )
+
+  const handleCreateCampaign = (newCampaignData: any) => {
+    createMutation.mutate(newCampaignData)
+  }
+
+  const handleUpdateCampaign = (campaignId: string, updatedCampaignData: any) => {
+    updateMutation.mutate({ campaignId, campaignData: updatedCampaignData })
+  }
+
+  //const filteredCampaigns =
+  //campaigns?.filter((campaign) => campaign.status === activeTab) || []
 
   return (
     <Container>
@@ -15,8 +64,8 @@ const Campanha: React.FC = () => {
         <IconTicket className="mr-2 size-7" />
         Campanha
       </h4>
-      <Card className="relative flex h-80 w-full flex-col items-center justify-center p-4">
-        <div className="absolute left-4 top-4 flex space-x-4">
+      <Card className="relative flex min-h-80 w-full flex-col  p-4">
+        <div className=" mb-8 flex items-center">
           <button
             className={`rounded px-2 py-1 text-sm font-semibold ${
               activeTab === 'andamento'
@@ -39,23 +88,15 @@ const Campanha: React.FC = () => {
           </button>
         </div>
 
-        {activeTab === 'andamento' && (
+        {infoCampaigns ? (
+          <DataTable columns={ColumnsCampaigns} data={infoCampaigns || []} />
+        ) : (
           <div className="flex flex-1 items-center justify-center">
             <div className="text-center">
               <IconLupa className="mx-auto mb-2 size-9 fill-[#A0AEC0]" />
               <p className="text-xl font-semibold text-[#A0AEC0]">
-                Nenhuma campanha em andamento encontrada
-              </p>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'encerradas' && (
-          <div className="flex flex-1 items-center justify-center">
-            <div className="text-center">
-              <IconLupa className="mx-auto mb-2 size-9 fill-[#A0AEC0]" />
-              <p className="text-xl font-semibold text-[#A0AEC0]">
-                Nenhuma campanha encerrada encontrada
+                Nenhuma campanha{' '}
+                {activeTab === 'andamento' ? 'em andamento' : 'encerrada'} encontrada
               </p>
             </div>
           </div>
@@ -64,6 +105,7 @@ const Campanha: React.FC = () => {
         <Link
           className="absolute right-4 top-4 rounded-lg bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-6 py-1 text-lg font-semibold text-[#3D3D3D] shadow-md transition-all duration-300 hover:text-white"
           to={'/campaigns/create'}
+          onClick={() => handleCreateCampaign({})}
         >
           + nova
         </Link>

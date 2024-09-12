@@ -10,7 +10,41 @@ import InfoCampaigns from './InfoCampaigns'
 import { Stepper } from './stepper'
 
 const Create: React.FC = () => {
-  const [currentStep, setCurrentStep] = useState<number>(1)
+  const [stateCampaigns, setStateCampaigns] = useState<{
+    step: number
+    name: string
+    chamada: string
+    telefone: string
+    email: string
+    description: string
+    quantidade: string
+    valor: string
+    minimo: string
+    maximo: string
+    tempo: string
+    local: string
+    upload: null
+    regras: boolean
+    diaDoSorteio: boolean
+    promover: string
+  }>({
+    step: 1,
+    name: '',
+    chamada: '',
+    telefone: '',
+    email: '',
+    description: '',
+    quantidade: '',
+    valor: '',
+    minimo: '',
+    maximo: '',
+    tempo: '',
+    local: '',
+    upload: null,
+    regras: false,
+    diaDoSorteio: false,
+    promover: ''
+  })
   const stepsControl = [
     { number: 1, text: 'Informações Básicas da Campanha' },
     { number: 2, text: 'Configuração da Campanha' },
@@ -20,11 +54,11 @@ const Create: React.FC = () => {
   ]
 
   const renderStepContent = () => {
-    switch (currentStep) {
+    switch (stateCampaigns.step) {
       case 1:
-        return <InfoCampaigns />
+        return <InfoCampaigns setState={setStateCampaigns} />
       case 2:
-        return <ConfigCampaigns />
+        return <ConfigCampaigns setState={setStateCampaigns} />
       case 3:
         return <Awards />
       case 4:
@@ -44,18 +78,20 @@ const Create: React.FC = () => {
       </h4>
       <div className="flex h-dvh flex-col justify-between gap-4 rounded-xl border-2 border-[#A0AEC0] p-6 text-base">
         <div className="flex flex-col gap-4">
-          {currentStep < 5 && (
-            <Stepper currentStep={currentStep} stepsControl={stepsControl} />
+          {stateCampaigns.step < 5 && (
+            <Stepper currentStep={stateCampaigns.step} stepsControl={stepsControl} />
           )}
           {renderStepContent()}
         </div>
 
         <div className="flex items-center justify-between">
-          {currentStep > 1 ? (
+          {stateCampaigns.step > 1 ? (
             <Button
               className="py-2transition-all h-10 w-32 rounded-md bg-white px-4 font-semibold text-slate-950 duration-300 hover:text-white"
               // disabled={!isFormValid}
-              onClick={() => setCurrentStep((prev) => prev - 1)}
+              onClick={() =>
+                setStateCampaigns((prev) => ({ ...prev, step: prev.step - 1 }))
+              }
             >
               Voltar
             </Button>
@@ -67,7 +103,9 @@ const Create: React.FC = () => {
           <Button
             className="h-10 w-32 rounded-md bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-4 py-2 font-semibold text-slate-950 transition-all duration-300 hover:text-white"
             // disabled={!isFormValid}
-            onClick={() => setCurrentStep((prev) => prev + 1)}
+            onClick={() =>
+              setStateCampaigns((prev) => ({ ...prev, step: prev.step + 1 }))
+            }
           >
             Avançar
           </Button>

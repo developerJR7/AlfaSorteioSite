@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
@@ -21,8 +21,30 @@ interface DDIProps {
   ddi: number
   continente: string
 }
+interface infoCampaignsProps {
+  setState: Dispatch<
+    SetStateAction<{
+      step: number
+      name: string
+      chamada: string
+      telefone: string
+      email: string
+      description: string
+      quantidade: string
+      valor: string
+      minimo: string
+      maximo: string
+      tempo: string
+      local: string
+      upload: null
+      regras: boolean
+      diaDoSorteio: boolean
+      promover: string
+    }>
+  >
+}
 
-const InfoCampaigns: React.FC = () => {
+const InfoCampaigns: React.FC<infoCampaignsProps> = ({ setState }) => {
   const [open, setOpen] = useState<boolean>(false)
   const [selectedDDI, setSelectedDDI] = useState<DDIProps | null>(null)
   const [campaignInfo, setCampaignInfo] = useState<{
@@ -66,7 +88,7 @@ const InfoCampaigns: React.FC = () => {
           placeholder="Nome da Campanha*"
           value={campaignInfo.name}
           onChange={(e) =>
-            setCampaignInfo((prevState) => ({
+            setState((prevState) => ({
               ...prevState,
               name: e.target.value
             }))
@@ -81,9 +103,9 @@ const InfoCampaigns: React.FC = () => {
           placeholder="Crie uma chamada rápida atrativa para sua campanha"
           value={campaignInfo.headline}
           onChange={(e) =>
-            setCampaignInfo((prevState) => ({
+            setState((prevState) => ({
               ...prevState,
-              headline: e.target.value
+              chamada: e.target.value
             }))
           }
           className="bg-white text-xs shadow-sm"
@@ -151,9 +173,9 @@ const InfoCampaigns: React.FC = () => {
               className="bg-white text-xs shadow-sm"
               value={campaignInfo.supportPhone}
               onChange={(e) =>
-                setCampaignInfo((prevState) => ({
+                setState((prevState) => ({
                   ...prevState,
-                  supportPhone: e.target.value
+                  telefone: e.target.value
                 }))
               }
             />
@@ -166,9 +188,9 @@ const InfoCampaigns: React.FC = () => {
             placeholder="E-mail de suporte*"
             value={campaignInfo.supportEmail}
             onChange={(e) =>
-              setCampaignInfo((prevState) => ({
+              setState((prevState) => ({
                 ...prevState,
-                supportEmail: e.target.value
+                email: e.target.value
               }))
             }
             className="bg-white text-xs shadow-sm"
@@ -183,7 +205,7 @@ const InfoCampaigns: React.FC = () => {
           placeholder="As cotas são liberadas após a confirmação do pagamento. A Data do sorteio será divulgada quando obter 70% das cotas vendidas."
           value={campaignInfo.description}
           onChange={(e) =>
-            setCampaignInfo((prevState) => ({
+            setState((prevState) => ({
               ...prevState,
               description: e.target.value
             }))

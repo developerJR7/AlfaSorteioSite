@@ -1,6 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { Bolt, Menu } from 'lucide-react'
-import { formattedDate } from '@/utils/formatDate'
 import {
   Tooltip,
   TooltipContent,
@@ -44,7 +43,11 @@ export const ColumnsCampaigns: ColumnDef<App.campaignsProps>[] = [
     cell: ({ row }) => {
       return (
         <div className="text-xs">
-          <img src={row.getValue('image')} alt="imagem de sorteio" />
+          <img
+            className="size-12 object-contain"
+            src={row.getValue('image')}
+            alt="imagem de sorteio"
+          />
         </div>
       )
     }
@@ -64,8 +67,12 @@ export const ColumnsCampaigns: ColumnDef<App.campaignsProps>[] = [
                       <Bolt className="size-5" />
                     </div>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <div className="p-2">Sem ações disponíveis</div>
+                  <DropdownMenuContent className="flex flex-col items-start">
+                    <button className="p-2">Editar</button>
+                    <button className="p-2">Compartilhar</button>
+                    <button className="p-2">Sortear</button>
+                    <button className="p-2">Gerenciar promoções</button>
+                    <button className="p-2">Indicar vencedores</button>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TooltipTrigger>

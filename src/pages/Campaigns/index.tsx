@@ -17,6 +17,7 @@ type Campaign = {
 
 const Campanha: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'andamento' | 'encerradas'>('andamento')
+
   const queryClient = useQueryClient()
 
   const {

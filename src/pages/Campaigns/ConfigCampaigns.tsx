@@ -1,8 +1,31 @@
 import { Input } from '@/components/ui/input'
 import { Switch } from '@headlessui/react'
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 
-const ConfigCampaigns: React.FC = () => {
+interface configCampaignsProps {
+  setState: Dispatch<
+    SetStateAction<{
+      step: number
+      name: string
+      chamada: string
+      telefone: string
+      email: string
+      description: string
+      quantidade: string
+      valor: string
+      minimo: string
+      maximo: string
+      tempo: string
+      local: string
+      upload: null
+      regras: boolean
+      diaDoSorteio: boolean
+      promover: string
+    }>
+  >
+}
+
+const ConfigCampaigns: React.FC<configCampaignsProps> = ({ setState }) => {
   const [campaignInfo, setCampaignInfo] = useState({
     supportPhone: '',
     supportEmail: '',
@@ -33,9 +56,9 @@ const ConfigCampaigns: React.FC = () => {
             className="bg-white text-xs shadow-sm"
             value={campaignInfo.supportPhone}
             onChange={(e) =>
-              setCampaignInfo((prevState) => ({
+              setState((prevState) => ({
                 ...prevState,
-                supportPhone: e.target.value
+                quantidade: e.target.value
               }))
             }
           />
@@ -48,9 +71,9 @@ const ConfigCampaigns: React.FC = () => {
             className="bg-white text-xs shadow-sm"
             value={campaignInfo.supportEmail}
             onChange={(e) =>
-              setCampaignInfo((prevState) => ({
+              setState((prevState) => ({
                 ...prevState,
-                supportEmail: e.target.value
+                valor: e.target.value
               }))
             }
           />
@@ -67,7 +90,7 @@ const ConfigCampaigns: React.FC = () => {
             onChange={(e) =>
               setCampaignInfo((prevState) => ({
                 ...prevState,
-                minCotas: e.target.value
+                minimo: e.target.value
               }))
             }
           />
@@ -82,9 +105,9 @@ const ConfigCampaigns: React.FC = () => {
             className="bg-white text-xs shadow-sm"
             value={campaignInfo.maxCotas}
             onChange={(e) =>
-              setCampaignInfo((prevState) => ({
+              setState((prevState) => ({
                 ...prevState,
-                maxCotas: e.target.value
+                maximo: e.target.value
               }))
             }
           />
@@ -119,7 +142,7 @@ const ConfigCampaigns: React.FC = () => {
             name="select2"
             value={campaignInfo.selectOption2}
             onChange={(e) =>
-              setCampaignInfo((prevState) => ({
+              setState((prevState) => ({
                 ...prevState,
                 selectOption2: e.target.value
               }))
@@ -144,7 +167,7 @@ const ConfigCampaigns: React.FC = () => {
               className="bg-white text-xs shadow-sm"
               value={campaignInfo.supportEmail}
               onChange={(e) =>
-                setCampaignInfo((prevState) => ({
+                setState((prevState) => ({
                   ...prevState,
                   supportEmail: e.target.value
                 }))
@@ -232,7 +255,7 @@ const ConfigCampaigns: React.FC = () => {
               className="bg-white text-xs shadow-sm"
               value={campaignInfo.supportEmail}
               onChange={(e) =>
-                setCampaignInfo((prevState) => ({
+                setState((prevState) => ({
                   ...prevState,
                   supportEmail: e.target.value
                 }))

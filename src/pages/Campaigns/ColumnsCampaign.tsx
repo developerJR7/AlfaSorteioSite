@@ -1,16 +1,16 @@
-import { ColumnDef } from '@tanstack/react-table'
-import { Bolt, Menu } from 'lucide-react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
+import { ColumnDef } from '@tanstack/react-table'
+import { Bolt } from 'lucide-react'
 
 export const ColumnsCampaigns: ColumnDef<App.campaignsProps>[] = [
   {

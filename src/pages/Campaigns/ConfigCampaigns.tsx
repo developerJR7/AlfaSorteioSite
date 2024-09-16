@@ -1,8 +1,34 @@
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select'
 import { Switch } from '@headlessui/react'
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 
 interface configCampaignsProps {
+  state: {
+    step: number
+    name: string
+    chamada: string
+    telefone: string
+    email: string
+    description: string
+    quantidade: string
+    valor: string
+    minimo: string
+    maximo: string
+    tempo: string
+    local: string
+    upload: null
+    regras: boolean
+    diaDoSorteio: boolean
+    promover: string
+  }
   setState: Dispatch<
     SetStateAction<{
       step: number
@@ -25,147 +51,128 @@ interface configCampaignsProps {
   >
 }
 
-const ConfigCampaigns: React.FC<configCampaignsProps> = ({ setState }) => {
-  const [campaignInfo, setCampaignInfo] = useState({
-    supportPhone: '',
-    supportEmail: '',
-    minCotas: '',
-    maxCotas: '',
-    selectOption1: 'Option1',
-    selectOption2: 'Option1',
-    promoteAffiliates: 'Option1',
-    enabled1: false,
-    enabled2: false
-  })
-
-  const handlePromoteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCampaignInfo((prevState) => ({
-      ...prevState,
-      promoteAffiliates: e.target.value
-    }))
-  }
-
+const ConfigCampaigns: React.FC<configCampaignsProps> = ({ state, setState }) => {
   return (
     <>
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-2 gap-8 text-sm font-normal text-black">
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-bold text-black">Quantidade de Cotas</label>
+          <label className="font-bold">Quantidade de Cotas</label>
           <Input
             type="tel"
             placeholder="1 ~ 1.000.000.000"
-            className="bg-white text-xs shadow-sm"
-            value={campaignInfo.supportPhone}
-            onChange={(e) =>
-              setState((prevState) => ({
-                ...prevState,
+            className="bg-white shadow-sm"
+            value={state.quantidade}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setState({
+                ...state,
                 quantidade: e.target.value
-              }))
+              })
             }
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-bold text-black">Valor da Cota</label>
+          <label className="font-bold">Valor da Cota</label>
           <Input
             type="email"
             placeholder="R$"
             className="bg-white text-xs shadow-sm"
-            value={campaignInfo.supportEmail}
-            onChange={(e) =>
-              setState((prevState) => ({
-                ...prevState,
+            value={state.valor}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setState({
+                ...state,
                 valor: e.target.value
-              }))
+              })
             }
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-bold text-black">
-            Quantidade mínima de cotas por compra
-          </label>
+          <label className="font-bold">Quantidade mínima de cotas por compra</label>
           <Input
             type="text"
             placeholder="1"
-            className="bg-white text-xs shadow-sm"
-            value={campaignInfo.minCotas}
-            onChange={(e) =>
-              setCampaignInfo((prevState) => ({
-                ...prevState,
+            className="bg-white shadow-sm"
+            value={state.minimo}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setState({
+                ...state,
                 minimo: e.target.value
-              }))
+              })
             }
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-bold text-black">
-            Quantidade máxima de cotas por compra
-          </label>
+          <label className="font-bold">Quantidade máxima de cotas por compra</label>
           <Input
             type="text"
             placeholder="1 ~ 1.000.000.000"
-            className="bg-white text-xs shadow-sm"
-            value={campaignInfo.maxCotas}
-            onChange={(e) =>
-              setState((prevState) => ({
-                ...prevState,
+            className="bg-white shadow-sm"
+            value={state.maximo}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setState({
+                ...state,
                 maximo: e.target.value
-              }))
+              })
             }
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="select1" className="text-xs font-bold text-black">
+          <label htmlFor="select1" className="font-bold">
             Tempo para pagamento da cota
           </label>
-          <select
-            id="select1"
-            name="select1"
-            value={campaignInfo.selectOption1}
-            onChange={(e) =>
-              setCampaignInfo((prevState) => ({
-                ...prevState,
-                selectOption1: e.target.value
-              }))
+          <Select
+            onValueChange={(e) =>
+              setState({
+                ...state,
+                tempo: e
+              })
             }
-            className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
           >
-            <option value="Option1">10 minutos</option>
-            <option value="Option2">30 minutos</option>
-            <option value="Option3">1 hora</option>
-          </select>
+            <SelectTrigger value={state.tempo} className="bg-white shadow-sm">
+              <SelectValue placeholder="Selecione" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="10m">10 minutos</SelectItem>
+                <SelectItem value="30m">30 minutos</SelectItem>
+                <SelectItem value="1h">1 hora</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="select2" className="text-xs font-bold text-black">
+          <label htmlFor="select2" className="font-bold">
             Local do Sorteio
           </label>
-          <select
-            id="select2"
-            name="select2"
-            value={campaignInfo.selectOption2}
-            onChange={(e) =>
-              setState((prevState) => ({
-                ...prevState,
-                selectOption2: e.target.value
-              }))
+          <Select
+            onValueChange={(e) =>
+              setState({
+                ...state,
+                local: e
+              })
             }
-            className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
           >
-            <option value="Option1">Loteria Federal</option>
-            <option value="Option2">Live no Instagram</option>
-            <option value="Option3">Live no Youtube</option>
-            <option value="Option4">Live no TikTok</option>
-            <option value="Option5">Outros</option>
-          </select>
+            <SelectTrigger value={state.local} className="bg-white shadow-sm">
+              <SelectValue placeholder="Selecione" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="loteria federal">Loteria Federal</SelectItem>
+                <SelectItem value="live instagram">Live no Instagram</SelectItem>
+                <SelectItem value="live youtube">Live no Youtube</SelectItem>
+                <SelectItem value="live tiktok">Live no Tiktok</SelectItem>
+                <SelectItem value="outros">Outros</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-bold text-black">
-            Upload do Regulamento
-          </label>
+          <label className="font-bold">Upload do Regulamento</label>
           <div className="flex items-center gap-2">
             <Input
               type="file"
               placeholder="Faça o upload do Regulamento em PDF"
-              className="bg-white text-xs shadow-sm"
-              value={campaignInfo.supportEmail}
+              className="bg-white shadow-sm"
+              value={state.upload ? state.upload : ''}
               onChange={(e) =>
                 setState((prevState) => ({
                   ...prevState,
@@ -176,75 +183,80 @@ const ConfigCampaigns: React.FC<configCampaignsProps> = ({ setState }) => {
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <label className="text-xs font-bold text-black">Data do Sorteio</label>
+          <label className="font-bold">Data do Sorteio</label>
           <div className="flex items-center justify-center gap-2">
             <Switch
-              checked={campaignInfo.enabled1}
+              checked={state.diaDoSorteio}
               onChange={() => {
-                setCampaignInfo((prevState) => ({
-                  ...prevState,
-                  enabled1: !prevState.enabled1
-                }))
+                setState({
+                  ...state,
+                  diaDoSorteio: !state.diaDoSorteio
+                })
               }}
               className={`relative inline-flex h-6 w-11 cursor-pointer rounded-full border-2 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-                campaignInfo.enabled1 ? 'bg-green-500' : 'bg-red-500'
+                state.diaDoSorteio ? 'bg-green-500' : 'bg-red-500'
               }`}
             >
               <span className="sr-only">Toggle 1</span>
               <span
                 aria-hidden="true"
                 className={`inline-block h-5 w-5 transform rounded-full bg-white transition duration-200 ease-in-out ${
-                  campaignInfo.enabled1 ? 'translate-x-5' : 'translate-x-0'
+                  state.diaDoSorteio ? 'translate-x-5' : 'translate-x-0'
                 }`}
               />
             </Switch>
-            <label className="translate-y-1 text-xs text-gray-600">
+            <label className="translate-y-1 text-gray-600">
               Informar a data do sorteio
             </label>
             <Switch
-              checked={campaignInfo.enabled2}
+              checked={state.regras}
               onChange={() => {
-                setCampaignInfo((prevState) => ({
-                  ...prevState,
-                  enabled2: !prevState.enabled2
-                }))
+                setState({
+                  ...state,
+                  regras: !state.regras
+                })
               }}
               className={`relative inline-flex h-6 w-11 cursor-pointer rounded-full border-2 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-                campaignInfo.enabled2 ? 'bg-green-500' : 'bg-red-500'
+                state.regras ? 'bg-green-500' : 'bg-red-500'
               }`}
             >
               <span className="sr-only">Toggle 2</span>
               <span
                 aria-hidden="true"
                 className={`inline-block h-5 w-5 transform rounded-full bg-white transition duration-200 ease-in-out ${
-                  campaignInfo.enabled2 ? 'translate-x-5' : 'translate-x-0'
+                  state.regras ? 'translate-x-5' : 'translate-x-0'
                 }`}
               />
             </Switch>
-            <label className="translate-y-1 text-xs text-gray-600">
+            <label className="translate-y-1 text-gray-600">
               Regras para definir a data
             </label>
           </div>
         </div>
         <div className="flex flex-col gap-1">
-          <label
-            htmlFor="promoteAffiliates"
-            className="text-xs font-bold text-black"
-          >
+          <label htmlFor="promoteAffiliates" className="font-bold">
             Promover na Vitrine de Afiliados
           </label>
-          <select
-            id="promoteAffiliates"
-            name="promoteAffiliates"
-            value={campaignInfo.promoteAffiliates}
-            onChange={handlePromoteChange}
-            className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          <Select
+            onValueChange={(e) =>
+              setState({
+                ...state,
+                promover: e
+              })
+            }
           >
-            <option value="Option1">Sim</option>
-            <option value="Option2">Não</option>
-          </select>
+            <SelectTrigger value={state.promover} className="bg-white shadow-sm">
+              <SelectValue placeholder="Selecione" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="sim">Sim</SelectItem>
+                <SelectItem value="nao">Não</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
-        {campaignInfo.promoteAffiliates === 'Option1' && (
+        {state.promover === 'Option1' && (
           <div className="flex flex-col gap-2">
             <label className="text-xs font-bold text-black">
               Porcetagem Dos Afiliados
@@ -253,13 +265,13 @@ const ConfigCampaigns: React.FC<configCampaignsProps> = ({ setState }) => {
               type="text"
               placeholder="Defina o percentual de comissão por cota vendida"
               className="bg-white text-xs shadow-sm"
-              value={campaignInfo.supportEmail}
-              onChange={(e) =>
-                setState((prevState) => ({
-                  ...prevState,
-                  supportEmail: e.target.value
-                }))
-              }
+              // value={state.supportEmail}
+              // onChange={(e) =>
+              //   setState((prevState) => ({
+              //     ...prevState,
+              //     supportEmail: e.target.value
+              //   }))
+              // }
             />
           </div>
         )}

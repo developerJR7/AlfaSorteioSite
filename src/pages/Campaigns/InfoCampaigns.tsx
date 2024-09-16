@@ -1,7 +1,5 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { api } from '@/api/Api'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import {
   Command,
   CommandEmpty,
@@ -10,10 +8,12 @@ import {
   CommandItem,
   CommandList
 } from '@/components/ui/command'
-import { ChevronDown } from 'lucide-react'
-import { useQuery } from 'react-query'
-import { api } from '@/api/Api'
+import { Input } from '@/components/ui/input'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
+import { ChevronDown } from 'lucide-react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { useQuery } from 'react-query'
 
 interface DDIProps {
   pais: string
@@ -22,6 +22,24 @@ interface DDIProps {
   continente: string
 }
 interface infoCampaignsProps {
+  state: {
+    step: number
+    name: string
+    chamada: string
+    telefone: string
+    email: string
+    description: string
+    quantidade: string
+    valor: string
+    minimo: string
+    maximo: string
+    tempo: string
+    local: string
+    upload: null
+    regras: boolean
+    diaDoSorteio: boolean
+    promover: string
+  }
   setState: Dispatch<
     SetStateAction<{
       step: number
@@ -44,24 +62,9 @@ interface infoCampaignsProps {
   >
 }
 
-const InfoCampaigns: React.FC<infoCampaignsProps> = ({ setState }) => {
+const InfoCampaigns: React.FC<infoCampaignsProps> = ({ state, setState }) => {
   const [open, setOpen] = useState<boolean>(false)
   const [selectedDDI, setSelectedDDI] = useState<DDIProps | null>(null)
-  const [campaignInfo, setCampaignInfo] = useState<{
-    name: string
-    headline: string
-    supportPhone: string
-    supportEmail: string
-    description: string
-  }>({
-    name: '',
-    headline: '',
-    supportPhone: '',
-    supportEmail: '',
-    description: ''
-  })
-
-  const isFormValid = Object.entries(campaignInfo).every(([, value]) => value !== '')
 
   const { data: DDI, isLoading } = useQuery<DDIProps[]>('list-DDI', async () => {
     const res = await api.get('/user/country_codes')
@@ -77,45 +80,38 @@ const InfoCampaigns: React.FC<infoCampaignsProps> = ({ setState }) => {
     }
   }, [DDI])
 
-  const handleSave = async () => {}
-
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 text-sm font-normal text-black">
       <div className="flex flex-col gap-1">
-        <label className="text-xs font-bold text-black">Nome da Campanha*</label>
+        <label className="font-bold">Nome da Campanha*</label>
         <Input
           type="text"
           placeholder="Nome da Campanha*"
-          value={campaignInfo.name}
-          onChange={(e) =>
-            setState((prevState) => ({
-              ...prevState,
-              name: e.target.value
-            }))
+          value={state.name}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setState({ ...state, name: e.target.value })
           }
-          className="bg-white text-xs shadow-sm"
+          className="bg-white shadow-sm"
         />
       </div>
       <div className="flex flex-col gap-1">
-        <label className="text-xs font-bold text-black">Chamada da Campanha*</label>
+        <label className="font-bold">Chamada da Campanha*</label>
         <Input
           type="text"
           placeholder="Crie uma chamada rápida atrativa para sua campanha"
-          value={campaignInfo.headline}
-          onChange={(e) =>
-            setState((prevState) => ({
-              ...prevState,
+          className="bg-white shadow-sm"
+          value={state.chamada}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setState({
+              ...state,
               chamada: e.target.value
-            }))
+            })
           }
-          className="bg-white text-xs shadow-sm"
         />
       </div>
       <div className="grid grid-cols-2 gap-8">
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-bold text-black">
-            Telefone de Suporte (com whatsapp)*
-          </label>
+          <label className="font-bold">Telefone de Suporte (com whatsapp)*</label>
           <div className="flex items-center gap-1">
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
@@ -142,16 +138,16 @@ const InfoCampaigns: React.FC<infoCampaignsProps> = ({ setState }) => {
               <PopoverContent>
                 <Command>
                   <CommandInput
-                    className="bg-white text-xs shadow-sm"
+                    className="bg-white shadow-sm"
                     placeholder="Pesquise pelo DDI"
                   />
                   <CommandList>
                     <CommandEmpty>Nenhum DDI listado.</CommandEmpty>
                     <CommandGroup>
                       {DDI &&
-                        DDI.map((ddiItem) => (
+                        DDI.map((ddiItem, number) => (
                           <CommandItem
-                            key={ddiItem.ddi}
+                            key={ddiItem.ddi + number}
                             onSelect={() => setSelectedDDI(ddiItem)}
                           >
                             <img
@@ -168,49 +164,47 @@ const InfoCampaigns: React.FC<infoCampaignsProps> = ({ setState }) => {
               </PopoverContent>
             </Popover>
             <Input
-              type="tel"
+              type="number"
               placeholder="(00) 0 0000-0000"
-              className="bg-white text-xs shadow-sm"
-              value={campaignInfo.supportPhone}
-              onChange={(e) =>
-                setState((prevState) => ({
-                  ...prevState,
+              className="bg-white shadow-sm"
+              value={state.telefone}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setState({
+                  ...state,
                   telefone: e.target.value
-                }))
+                })
               }
             />
           </div>
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-bold text-black">E-mail de suporte*</label>
+          <label className="font-bold">E-mail de suporte*</label>
           <Input
             type="email"
             placeholder="E-mail de suporte*"
-            value={campaignInfo.supportEmail}
+            value={state.email}
             onChange={(e) =>
-              setState((prevState) => ({
-                ...prevState,
+              setState({
+                ...state,
                 email: e.target.value
-              }))
+              })
             }
-            className="bg-white text-xs shadow-sm"
+            className="bg-white shadow-sm"
           />
         </div>
       </div>
       <div className="flex flex-col gap-1">
-        <label className="text-xs font-bold text-black">
-          Descrição da Campanha*
-        </label>
+        <label className="font-bold">Descrição da Campanha*</label>
         <Textarea
           placeholder="As cotas são liberadas após a confirmação do pagamento. A Data do sorteio será divulgada quando obter 70% das cotas vendidas."
-          value={campaignInfo.description}
+          value={state.description}
           onChange={(e) =>
-            setState((prevState) => ({
-              ...prevState,
+            setState({
+              ...state,
               description: e.target.value
-            }))
+            })
           }
-          className="h-40 bg-white text-xs shadow-sm"
+          className="h-40 bg-white shadow-sm"
         />
       </div>
     </div>

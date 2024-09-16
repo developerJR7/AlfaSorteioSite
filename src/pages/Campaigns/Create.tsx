@@ -1,7 +1,7 @@
 import { IconTicket } from '@/components/icons'
 import { Container } from '@/components/layout/container'
 import { Button } from '@/components/ui/button'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Awards from './Awards'
 import CampaignsReview from './CampaignsReview'
 import CampaignsSuccess from './CampaignsSuccess'
@@ -45,6 +45,7 @@ const Create: React.FC = () => {
     diaDoSorteio: false,
     promover: ''
   })
+
   const stepsControl = [
     { number: 1, text: 'Informações Básicas da Campanha' },
     { number: 2, text: 'Configuração da Campanha' },
@@ -56,9 +57,11 @@ const Create: React.FC = () => {
   const renderStepContent = () => {
     switch (stateCampaigns.step) {
       case 1:
-        return <InfoCampaigns setState={setStateCampaigns} />
+        return <InfoCampaigns state={stateCampaigns} setState={setStateCampaigns} />
       case 2:
-        return <ConfigCampaigns setState={setStateCampaigns} />
+        return (
+          <ConfigCampaigns state={stateCampaigns} setState={setStateCampaigns} />
+        )
       case 3:
         return <Awards />
       case 4:
@@ -70,6 +73,10 @@ const Create: React.FC = () => {
     }
   }
 
+  useEffect(() => {
+    console.log('-->>', stateCampaigns)
+  }, [stateCampaigns])
+
   return (
     <Container>
       <h4 className="flex items-center gap-4 fill-[#255E17] text-xl font-semibold text-[#255E17]">
@@ -79,7 +86,11 @@ const Create: React.FC = () => {
       <div className="flex h-dvh flex-col justify-between gap-4 rounded-xl border-2 border-[#A0AEC0] p-6 text-base">
         <div className="flex flex-col gap-4">
           {stateCampaigns.step < 5 && (
-            <Stepper currentStep={stateCampaigns.step} stepsControl={stepsControl} />
+            <Stepper
+              key={stateCampaigns.step}
+              currentStep={stateCampaigns.step}
+              stepsControl={stepsControl}
+            />
           )}
           {renderStepContent()}
         </div>

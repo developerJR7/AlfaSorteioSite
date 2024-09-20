@@ -97,9 +97,12 @@ const Welcome: React.FC = () => {
           footer={
             <div className="flex w-full flex-col gap-4">
               <div className="flex flex-col items-end justify-end gap-4">
-                <label className="text-sm font-semibold text-colorPrimary-500">
+                <Link
+                  to="/forgot-Password"
+                  className="text-sm font-semibold text-colorPrimary-500"
+                >
                   Esqueceu sua senha
-                </label>
+                </Link>
                 <Button
                   className="rounded-lg bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-12 py-6 text-xl font-semibold text-[#3D3D3D] transition-all duration-300 hover:text-white"
                   disabled={!isFormValid || isLoading}

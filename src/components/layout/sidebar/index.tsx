@@ -7,7 +7,7 @@ import { Link, useLocation } from 'react-router-dom'
 export const Sidebar: React.FC = () => {
   const { signOut } = useAlfa()
   const location = useLocation()
-  const pathNameCurrent: string = location.pathname // Ajustei para garantir a consistência do nome.
+  const pathNameCurrent: string = location.pathname
 
   return (
     <nav className="flex h-dvh w-72 flex-col justify-start gap-1 bg-gradient-to-b from-[#255E17] to-[#769545] px-4 py-2 text-xl text-white">

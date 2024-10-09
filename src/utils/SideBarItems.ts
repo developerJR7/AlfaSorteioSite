@@ -1,4 +1,5 @@
 import {
+  IconDiscount,
   IconExit,
   IconHome,
   IconLottery,
@@ -22,6 +23,12 @@ export const itemsRoute = [
     title: 'Campanha',
     icon: IconTicket,
     path: '/campaigns',
+    session: 'pages'
+  },
+  {
+    title: 'Promoções',
+    icon: IconDiscount,
+    path: '/promotions',
     session: 'pages'
   },
   {

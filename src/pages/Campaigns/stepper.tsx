@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import React from 'react'
 
 interface StepperProps {
   currentStep: number
@@ -17,7 +18,7 @@ export const Stepper: React.FC<StepperProps> = ({ currentStep, stepsControl }) =
   return (
     <nav className="relative m-auto mb-12 flex w-9/12 items-center justify-between">
       {stepsControl.map(({ text, number }, index) => (
-        <>
+        <React.Fragment key={index}>
           {index < stepsControl.length - 1 && (
             <div
               className={cn(
@@ -53,7 +54,7 @@ export const Stepper: React.FC<StepperProps> = ({ currentStep, stepsControl }) =
               {text}
             </label>
           </div>
-        </>
+        </React.Fragment>
       ))}
     </nav>
   )

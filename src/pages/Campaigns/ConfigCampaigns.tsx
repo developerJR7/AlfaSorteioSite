@@ -7,48 +7,13 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
+import { CreateCampaigns } from '@/types/banner'
 import { Switch } from '@headlessui/react'
 import React, { Dispatch, SetStateAction } from 'react'
 
 interface configCampaignsProps {
-  state: {
-    step: number
-    name: string
-    chamada: string
-    telefone: string
-    email: string
-    description: string
-    quantidade: string
-    valor: string
-    minimo: string
-    maximo: string
-    tempo: string
-    local: string
-    upload: null
-    regras: boolean
-    diaDoSorteio: boolean
-    promover: string
-  }
-  setState: Dispatch<
-    SetStateAction<{
-      step: number
-      name: string
-      chamada: string
-      telefone: string
-      email: string
-      description: string
-      quantidade: string
-      valor: string
-      minimo: string
-      maximo: string
-      tempo: string
-      local: string
-      upload: null
-      regras: boolean
-      diaDoSorteio: boolean
-      promover: string
-    }>
-  >
+  state: CreateCampaigns
+  setState: Dispatch<SetStateAction<CreateCampaigns>>
 }
 
 const ConfigCampaigns: React.FC<configCampaignsProps> = ({ state, setState }) => {
@@ -170,15 +135,21 @@ const ConfigCampaigns: React.FC<configCampaignsProps> = ({ state, setState }) =>
           <div className="flex items-center gap-2">
             <Input
               type="file"
-              placeholder="Faça o upload do Regulamento em PDF"
+              accept="image/*"
               className="bg-white shadow-sm"
-              value={state.upload ? state.upload : ''}
-              onChange={(e) =>
-                setState((prevState) => ({
-                  ...prevState,
-                  supportEmail: e.target.value
-                }))
-              }
+              onChange={(e) => {
+                const file = e.target.files ? e.target.files[0] : null
+                if (file) {
+                  const reader = new FileReader()
+                  reader.onloadend = () => {
+                    setState({
+                      ...state,
+                      upload: reader.result ?? null
+                    })
+                  }
+                  reader.readAsDataURL(file)
+                }
+              }}
             />
           </div>
         </div>

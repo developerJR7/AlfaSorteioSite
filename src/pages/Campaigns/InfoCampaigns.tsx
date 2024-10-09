@@ -11,6 +11,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
+import { CreateCampaigns } from '@/types/banner'
 import { ChevronDown } from 'lucide-react'
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
@@ -22,44 +23,8 @@ interface DDIProps {
   continente: string
 }
 interface infoCampaignsProps {
-  state: {
-    step: number
-    name: string
-    chamada: string
-    telefone: string
-    email: string
-    description: string
-    quantidade: string
-    valor: string
-    minimo: string
-    maximo: string
-    tempo: string
-    local: string
-    upload: null
-    regras: boolean
-    diaDoSorteio: boolean
-    promover: string
-  }
-  setState: Dispatch<
-    SetStateAction<{
-      step: number
-      name: string
-      chamada: string
-      telefone: string
-      email: string
-      description: string
-      quantidade: string
-      valor: string
-      minimo: string
-      maximo: string
-      tempo: string
-      local: string
-      upload: null
-      regras: boolean
-      diaDoSorteio: boolean
-      promover: string
-    }>
-  >
+  state: CreateCampaigns
+  setState: Dispatch<SetStateAction<CreateCampaigns>>
 }
 
 const InfoCampaigns: React.FC<infoCampaignsProps> = ({ state, setState }) => {
@@ -81,7 +46,7 @@ const InfoCampaigns: React.FC<infoCampaignsProps> = ({ state, setState }) => {
   }, [DDI])
 
   return (
-    <div className="flex flex-col gap-2 text-sm font-normal text-black">
+    <div className="flex flex-col gap-4 text-sm font-normal text-black">
       <div className="flex flex-col gap-1">
         <label className="font-bold">Nome da Campanha*</label>
         <Input

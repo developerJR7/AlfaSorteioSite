@@ -13,7 +13,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { Bolt } from 'lucide-react'
 
 // Interface for promotion data
-interface PromotionsListProps {
+export interface PromotionsListProps {
   name: string
   linkedCampaign: string
   totalValue: number

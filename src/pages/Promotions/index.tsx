@@ -3,27 +3,16 @@ import IconLupa from '@/components/icons/Lupa'
 import { Container } from '@/components/layout/container'
 import { DataTable } from '@/components/Table'
 import { Card } from '@/components/ui/card'
-import { listPromotions } from '@/hooks/promotionsApi'
-import React, { useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
-import { Link } from 'react-router-dom'
-import { ColumnsPromotions } from '@/pages/Promotions/ColumnsPromotions'
-import { toast } from '@/components/ui/use-toast'
 import { Skeleton } from '@/components/ui/skeleton'
+import { toast } from '@/components/ui/use-toast'
+import { listPromotions } from '@/hooks/promotionsApi'
+import { ColumnsPromotions } from '@/pages/Promotions/ColumnsPromotions'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const PromotionsList: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'active' | 'closed'>('active')
-  const {
-    data: promotionsData,
-    isLoading,
-    isError
-  } = useQuery<App.PromotionsProps[]>({
-    queryKey: 'promotions',
-    queryFn: async () => {
-      const res = await listPromotions()
-      return res
-    }
-  })
+  const { data: promotionsData, isLoading, isError } = listPromotions()
 
   useEffect(() => {
     if (isError) {

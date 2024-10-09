@@ -18,8 +18,8 @@ const ForgotPassword: React.FC = () => {
     forgotPassword(
       { email },
       {
-        onSuccess: ({ token }) => {
-          navigate('https://alfasorteios.com/reset_password/' + token)
+        onSuccess: (res: { token: string }) => {
+          navigate('https://alfasorteios.com/reset_password/' + res.token)
 
           toast({
             variant: 'success',

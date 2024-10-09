@@ -1,22 +1,10 @@
+import { PromotionsListProps } from '@/pages/Promotions/ColumnsPromotions'
 import axios from 'axios'
+import { useQuery } from 'react-query'
 
-interface Promotion {
-  id: string
-  title: string
-  description: string
-  price: number
-}
-
-export const listPromotions = async (): Promise<Promotion[]> => {
-  try {
-    const response = await axios.get<Promotion[]>('/quotas/list_sales')
-    return response.data
-  } catch (error: any) {
-    if (axios.isAxiosError(error)) {
-      console.error('Error status:', error.response?.status)
-      console.error('Error data:', error.response?.data)
-    }
-    console.error('Error fetching promotions:', error)
-    throw new Error('Failed to fetch promotions.')
-  }
+export const listPromotions = () => {
+  return useQuery(['list-promotions'], async () => {
+    const { data } = await axios.get<PromotionsListProps[]>('/actions/gen_code')
+    return data
+  })
 }

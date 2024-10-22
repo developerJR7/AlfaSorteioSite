@@ -30,7 +30,7 @@ export const CardForLogin: React.FC<ICardForLogin> = ({
             <span className="text-shadow-4x  text-center text-xl font-semibold text-colorPrimary-500">
               {title}
             </span>
-            <span className="text-shadow-4x text-base font-light ">{option}</span>
+            <span className="text-shadow-4x text-base font-normal">{option}</span>
           </div>
           <div className="flex items-start gap-2">
             <Logo className="w-20 fill-[#255E17]" />

@@ -82,7 +82,7 @@ const Welcome: React.FC = () => {
                 >
                   {Icon && <Icon className="h-6 w-6" />}
                   <input
-                    className="bg-slate-100"
+                    className="w-full bg-slate-100"
                     type={type === 'pwd' ? 'password' : type}
                     placeholder={title}
                     value={state[type as keyof typeof state]}

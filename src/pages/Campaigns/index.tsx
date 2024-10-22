@@ -3,13 +3,14 @@ import IconLupa from '@/components/icons/Lupa'
 import { Container } from '@/components/layout/container'
 import { DataTable } from '@/components/Table'
 import { Card } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
+import { toast } from '@/components/ui/use-toast'
 import { listCampaigns } from '@/hooks/campaingsApi'
+import { campaignsType } from '@/types/campaings'
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 import { ColumnsCampaigns } from './ColumnsCampaign'
-import { toast } from '@/components/ui/use-toast'
-import { Skeleton } from '@/components/ui/skeleton'
 
 const Campanha: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'andamento' | 'encerradas'>('andamento')
@@ -17,7 +18,7 @@ const Campanha: React.FC = () => {
     data: infoCampaigns,
     isLoading,
     isError
-  } = useQuery<App.campaignsProps[]>({
+  } = useQuery<campaignsType[]>({
     queryKey: 'campaigns',
     queryFn: async () => {
       const res = await listCampaigns()

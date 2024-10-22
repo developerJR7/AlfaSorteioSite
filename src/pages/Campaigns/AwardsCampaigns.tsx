@@ -1,12 +1,12 @@
 import SetAwards from '@/assets/SetAwards.svg'
 import IconUpload from '@/components/icons/Upload'
 import { Input } from '@/components/ui/input'
-import { CreateCampaigns } from '@/types/banner'
+import { StateCampaignsType } from '@/types/campaings'
 import React, { Dispatch, SetStateAction } from 'react'
 
 interface AwardsCampaignsProps {
-  state: CreateCampaigns
-  setState: Dispatch<SetStateAction<CreateCampaigns>>
+  state: StateCampaignsType
+  setState: Dispatch<SetStateAction<StateCampaignsType>>
 }
 
 const AwardsCampaigns: React.FC<AwardsCampaignsProps> = ({ state, setState }) => {
@@ -16,9 +16,9 @@ const AwardsCampaigns: React.FC<AwardsCampaignsProps> = ({ state, setState }) =>
         <label className="text-base font-semibold text-black">
           Banner da Campanha
         </label>
-        {state?.banner !== null ? (
+        {state?.userimg !== null ? (
           <img
-            src={typeof state.banner === 'string' ? state.banner : ''}
+            src={typeof state.userimg === 'string' ? state.userimg : ''}
             alt="Banner"
             className="h-[442px] min-w-[382px] rounded-lg object-cover"
           />
@@ -27,32 +27,62 @@ const AwardsCampaigns: React.FC<AwardsCampaignsProps> = ({ state, setState }) =>
             className="relative flex h-[442px] w-[382px] flex-col items-center justify-center rounded-xl border-2 border-gray-300 bg-white p-4 text-center shadow-sm"
             onClick={() => document.getElementById('file_upload')?.click()}
           >
-            <IconUpload color="#A0AEC0" size={60} />
-            <input
-              id="file_upload"
-              hidden
+            {state?.name_file_userimg.length >= 1 ? (
+              <label
+                // className="flex w-full items-center justify-between gap-2 rounded-md bg-white px-4 py-2 shadow-sm"
+                className="text-black"
+              >
+                {state?.name_file_userimg}
+                <button
+                  className="size-4 rounded-full"
+                  onClick={() =>
+                    setState({ ...state, userimg: null, name_file_userimg: '' })
+                  }
+                >
+                  X
+                </button>
+              </label>
+            ) : (
+              <>
+                <button
+                  className="flex flex-col items-center gap-2"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    document.getElementById('fileUpload')?.click()
+                  }}
+                >
+                  <IconUpload color="#A0AEC0" size={60} />
+                  <label
+                    htmlFor="fileUpload"
+                    className="text-sm font-semibold text-[#A0AEC0]"
+                  >
+                    Faça o upload do banner em PNG Tamanho sugerido 370 x 445 Pixels
+                  </label>
+                </button>
+              </>
+            )}
+            <Input
+              id="fileUpload"
               type="file"
+              accept=".png,.jpeg,.jpg,.svg,.webp,.gif"
+              className="hidden"
               onChange={(e) => {
-                const file = e.target.files?.[0]
+                e.preventDefault()
+                const file = e.target.files ? e.target.files[0] : null
                 if (file) {
                   const reader = new FileReader()
                   reader.onload = (e) => {
                     const target = e.target as FileReader
                     setState({
                       ...state,
-                      banner: target.result as string
+                      userimg: target.result as string,
+                      name_file_userimg: file?.name ?? ''
                     })
                   }
                   reader.readAsDataURL(file)
                 }
               }}
             />
-            <label
-              htmlFor="file_upload"
-              className="text-sm font-semibold text-[#A0AEC0]"
-            >
-              Faça o upload do banner em PNG Tamanho sugerido 370 x 445 Pixels
-            </label>
             <span className="absolute bottom-8 w-10/12 text-xs font-medium text-black">
               Sugestão: <br /> Faça uma arte bonita, emoldurada e chamativa da
               premiação
@@ -72,11 +102,11 @@ const AwardsCampaigns: React.FC<AwardsCampaignsProps> = ({ state, setState }) =>
             <Input
               type="text"
               className="bg-white shadow-sm"
-              value={state.firstPrize}
+              value={state.prize}
               onChange={(e) =>
                 setState({
                   ...state,
-                  firstPrize: e.target.value
+                  prize: e.target.value
                 })
               }
             />
@@ -88,11 +118,11 @@ const AwardsCampaigns: React.FC<AwardsCampaignsProps> = ({ state, setState }) =>
             <Input
               type="text"
               className="bg-white shadow-sm"
-              value={state.secondPrize}
+              value={state.second_prize}
               onChange={(e) =>
                 setState({
                   ...state,
-                  secondPrize: e.target.value
+                  second_prize: e.target.value
                 })
               }
             />
@@ -104,11 +134,11 @@ const AwardsCampaigns: React.FC<AwardsCampaignsProps> = ({ state, setState }) =>
             <Input
               type="text"
               className="bg-white shadow-sm"
-              value={state.thirdPrize}
+              value={state.third_prize}
               onChange={(e) =>
                 setState({
                   ...state,
-                  thirdPrize: e.target.value
+                  third_prize: e.target.value
                 })
               }
             />

@@ -9,10 +9,11 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
+import { campaignsType } from '@/types/campaings'
 import { ColumnDef } from '@tanstack/react-table'
 import { Bolt } from 'lucide-react'
 
-export const ColumnsCampaigns: ColumnDef<App.campaignsProps>[] = [
+export const ColumnsCampaigns: ColumnDef<campaignsType>[] = [
   {
     accessorKey: 'name',
     header: () => 'Nome da Campanha',

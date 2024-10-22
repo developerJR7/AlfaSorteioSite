@@ -5,7 +5,7 @@ import { DialogContent } from '@/components/ui/dialog'
 import { toast } from '@/components/ui/use-toast'
 import { createCampaign } from '@/hooks/campaingsApi'
 import { cn } from '@/lib/utils'
-import { CreateCampaigns } from '@/types/banner'
+import { StateCampaignsType } from '@/types/campaings'
 import { ErrorResponse } from '@/types/ErrorResponse'
 import { Dialog, DialogTitle } from '@radix-ui/react-dialog'
 import React, { useEffect, useState } from 'react'
@@ -17,68 +17,76 @@ import ReviewCampaigns from './ReviewCampaigns'
 import { Stepper } from './stepper'
 
 const Create: React.FC = () => {
-  const { mutate: campaign, isLoading } = createCampaign()
-  const [stateCampaigns, setStateCampaigns] = useState<CreateCampaigns>({
+  const { mutate: campaign } = createCampaign()
+  const [stateCampaigns, setStateCampaigns] = useState<StateCampaignsType>({
     step: 1,
-    name: '',
-    chamada: '',
-    telefone: '',
-    email: '',
-    description: '',
-    quantidade: '',
-    valor: '',
-    minimo: '',
-    maximo: '',
-    tempo: '',
-    local: '',
-    upload: null,
-    banner: null,
-    regras: false,
-    diaDoSorteio: false,
-    promover: '',
-    firstPrize: '',
-    secondPrize: '',
-    thirdPrize: ''
+    campaign_name: '',
+    campaign_call: '',
+    support_phone: '',
+    support_email: '',
+    campaign_description: '',
+    mask_phone: '',
+    mask_email: '',
+    total_quotas: '',
+    quota_value: '',
+    quota_max: '',
+    quota_min: '',
+    prize: '',
+    second_prize: '',
+    third_prize: '',
+    location: '',
+    userimg: null,
+    name_file_userimg: '',
+    userpdf: null,
+    name_file_userpdf: '',
+    promote_date: false,
+    promote_rule: false,
+    promote_affiliate: false,
+    draw_date: '',
+    affiliate_percent: '',
+    quota_time: '',
+    status: 'active',
+    date_percent: '',
+    modalSuccess: false
   })
 
   const handleCreateCampaign = async () => {
-    campaign(
-      {
-        campaign_name: stateCampaigns.name,
-        campaign_call: stateCampaigns.chamada,
-        suport_phone: stateCampaigns.telefone,
-        suport_email: stateCampaigns.email,
-        campaign_description: stateCampaigns.description,
-        quota_value: stateCampaigns.valor,
-        campaign_modal: stateCampaigns.promover,
-        total_quotas: stateCampaigns.quantidade,
-        quota_max: Number(stateCampaigns.maximo),
-        quota_min: Number(stateCampaigns.minimo),
-        quota_time: Number(stateCampaigns.tempo),
-        location: Number(stateCampaigns.local),
-        userpdf: stateCampaigns.banner,
-        userimg: stateCampaigns.upload,
-        draw_date: new Date().toLocaleDateString(),
-        status: stateCampaigns.promover,
-        prize: stateCampaigns.firstPrize,
-        second_prize: stateCampaigns.secondPrize,
-        third_prize: stateCampaigns.thirdPrize
+    const formData: FormData = new FormData()
+    formData.append('campaign_name', stateCampaigns.campaign_name)
+    formData.append('campaign_call', stateCampaigns?.campaign_call)
+    formData.append('support_phone', stateCampaigns?.support_phone)
+    formData.append('support_email', stateCampaigns?.support_email)
+    formData.append('campaign_description', stateCampaigns?.campaign_description)
+    formData.append('campaign_model', '1')
+    formData.append('total_quotas', stateCampaigns?.total_quotas)
+    formData.append('quota_value', stateCampaigns?.quota_value)
+    formData.append('quota_max', stateCampaigns?.quota_max)
+    formData.append('quota_min', stateCampaigns?.quota_min)
+    formData.append('quota_time', stateCampaigns?.quota_time)
+    formData.append('location', stateCampaigns?.location)
+    formData.append('userpdf', stateCampaigns?.userpdf ?? '')
+    formData.append('image_base64', stateCampaigns?.userimg ?? '')
+    formData.append('status', stateCampaigns?.status)
+    // formData.append('date_percent', stateCampaigns?.date_percent)
+    formData.append('affiliates_percent', stateCampaigns?.affiliate_percent)
+    formData.append('draw_date', stateCampaigns?.draw_date)
+    formData.append('prize', stateCampaigns?.prize)
+    formData.append('second_prize', stateCampaigns?.second_prize)
+    formData.append('third_prize', stateCampaigns?.third_prize)
+    campaign(formData, {
+      onSuccess: (res: any) => {
+        console.log(res)
+        setStateCampaigns((prev) => ({ ...prev, step: 5, modalSuccess: true }))
       },
-      {
-        onSuccess: (res: any) => {
-          console.log(res)
-          setStateCampaigns((prev) => ({ ...prev, step: 5 }))
-        },
-        onError: (error: unknown) => {
-          const { response } = error as ErrorResponse
-          toast({
-            variant: 'destructive',
-            title: response.data.error,
-            description: 'repita o processo.'
-          })
-        }
+      onError: (error: unknown) => {
+        const { response } = error as ErrorResponse
+        toast({
+          variant: 'destructive',
+          title: response.data.error,
+          description: 'repita o processo.'
+        })
       }
-    )
+    })
   }
 
   const stepsControl = [
@@ -153,7 +161,7 @@ const Create: React.FC = () => {
                 </span>
               )}
               <Button
-                className="h-10 w-32 rounded-md bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-4 py-2 font-semibold text-slate-950 transition-all duration-300 hover:text-white"
+                className="h-10 w-fit min-w-32 rounded-md bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-4 py-2 font-semibold text-slate-950 transition-all duration-300 hover:text-white"
                 // disabled={!isFormValid}
                 onClick={() =>
                   stateCampaigns.step === 4
@@ -168,7 +176,15 @@ const Create: React.FC = () => {
         </div>
       </div>
       <>
-        <Dialog open={isLoading} onOpenChange={() => {}}>
+        <Dialog
+          open={stateCampaigns.modalSuccess}
+          onOpenChange={() =>
+            setStateCampaigns({
+              ...stateCampaigns,
+              modalSuccess: !stateCampaigns.modalSuccess
+            })
+          }
+        >
           <DialogContent className={cn('h-[40%] w-[30%]')}>
             <DialogTitle>Criando nova Campanha!</DialogTitle>
           </DialogContent>

@@ -11,7 +11,8 @@ import {
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
-import { CreateCampaigns } from '@/types/banner'
+import { StateCampaignsType } from '@/types/campaings'
+import { MaskInput } from '@/utils/MaskInput'
 import { ChevronDown } from 'lucide-react'
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
@@ -23,8 +24,8 @@ interface DDIProps {
   continente: string
 }
 interface infoCampaignsProps {
-  state: CreateCampaigns
-  setState: Dispatch<SetStateAction<CreateCampaigns>>
+  state: StateCampaignsType
+  setState: Dispatch<SetStateAction<StateCampaignsType>>
 }
 
 const InfoCampaigns: React.FC<infoCampaignsProps> = ({ state, setState }) => {
@@ -48,35 +49,37 @@ const InfoCampaigns: React.FC<infoCampaignsProps> = ({ state, setState }) => {
   return (
     <div className="flex flex-col gap-4 text-sm font-normal text-black">
       <div className="flex flex-col gap-1">
-        <label className="font-bold">Nome da Campanha*</label>
+        <label className="font-semibold">Nome da Campanha*</label>
         <Input
           type="text"
           placeholder="Nome da Campanha*"
-          value={state.name}
+          value={state.campaign_name}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setState({ ...state, name: e.target.value })
+            setState({ ...state, campaign_name: e.target.value })
           }
           className="bg-white shadow-sm"
         />
       </div>
       <div className="flex flex-col gap-1">
-        <label className="font-bold">Chamada da Campanha*</label>
+        <label className="font-semibold">Chamada da Campanha*</label>
         <Input
           type="text"
           placeholder="Crie uma chamada rápida atrativa para sua campanha"
           className="bg-white shadow-sm"
-          value={state.chamada}
+          value={state.campaign_call}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setState({
               ...state,
-              chamada: e.target.value
+              campaign_call: e.target.value
             })
           }
         />
       </div>
       <div className="grid grid-cols-2 gap-8">
         <div className="flex flex-col gap-1">
-          <label className="font-bold">Telefone de Suporte (com whatsapp)*</label>
+          <label className="font-semibold">
+            Telefone de Suporte (com whatsapp)*
+          </label>
           <div className="flex items-center gap-1">
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
@@ -129,44 +132,49 @@ const InfoCampaigns: React.FC<infoCampaignsProps> = ({ state, setState }) => {
               </PopoverContent>
             </Popover>
             <Input
-              type="number"
-              placeholder="(00) 0 0000-0000"
+              type="text"
               className="bg-white shadow-sm"
-              value={state.telefone}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              value={state.mask_phone}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                const { formattedKey, type } = MaskInput(e.target.value)
+                console.log(formattedKey, type)
                 setState({
                   ...state,
-                  telefone: e.target.value
+                  mask_phone: formattedKey,
+                  support_phone: e.target.value
                 })
-              }
+              }}
             />
           </div>
         </div>
         <div className="flex flex-col gap-1">
-          <label className="font-bold">E-mail de suporte*</label>
+          <label className="font-semibold">E-mail de suporte*</label>
           <Input
             type="email"
             placeholder="E-mail de suporte*"
-            value={state.email}
-            onChange={(e) =>
+            value={state.mask_email}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              const { formattedKey, type } = MaskInput(e.target.value)
+              console.log(formattedKey, type)
               setState({
                 ...state,
-                email: e.target.value
+                mask_email: formattedKey,
+                support_email: e.target.value
               })
-            }
+            }}
             className="bg-white shadow-sm"
           />
         </div>
       </div>
       <div className="flex flex-col gap-1">
-        <label className="font-bold">Descrição da Campanha*</label>
+        <label className="font-semibold">Descrição da Campanha*</label>
         <Textarea
           placeholder="As cotas são liberadas após a confirmação do pagamento. A Data do sorteio será divulgada quando obter 70% das cotas vendidas."
-          value={state.description}
+          value={state.campaign_description}
           onChange={(e) =>
             setState({
               ...state,
-              description: e.target.value
+              campaign_description: e.target.value
             })
           }
           className="h-40 bg-white shadow-sm"

@@ -318,13 +318,23 @@ const ConfigCampaigns: React.FC<configCampaignsProps> = ({ state, setState }) =>
                   const reader = new FileReader()
                   reader.onload = (e) => {
                     const target = e.target as FileReader
-                    setState({
-                      ...state,
-                      userpdf: target.result as string,
-                      name_file_userpdf: file?.name ?? ''
-                    })
+                    const base64File = target.result?.toString().split(',')[1]
+                    if (base64File) {
+                      setState({
+                        ...state,
+                        userpdf: base64File,
+                        name_file_userpdf: file.name
+                      })
+                    } else {
+                      console.error('Failed to convert file to base64')
+                    }
+                  }
+                  reader.onerror = (error) => {
+                    console.error('Error reading file:', error)
                   }
                   reader.readAsDataURL(file)
+                } else {
+                  console.error('No file selected')
                 }
               }}
             />

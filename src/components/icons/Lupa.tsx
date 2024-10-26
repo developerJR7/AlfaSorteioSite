@@ -1,11 +1,7 @@
+import { IconType } from '@/types/iconType'
 import { FC } from 'react'
-interface IconProps {
-  size?: number
-  color?: string
-  fill?: string
-  className?: string
-}
-const IconLupa: FC<IconProps> = ({ size, color, fill, className }) => {
+
+const IconLupa: FC<IconType> = ({ size, color, fill, className }) => {
   return (
     <svg
       width={size}

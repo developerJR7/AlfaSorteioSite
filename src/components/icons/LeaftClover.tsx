@@ -1,13 +1,7 @@
+import { IconType } from '@/types/iconType'
 import { FC } from 'react'
 
-export interface IconProps {
-  size?: number
-  color?: string
-  fill?: string
-  className?: string
-}
-
-const IconLeafClover: FC<IconProps> = ({
+const IconLeafClover: FC<IconType> = ({
   size = 32,
   fill = 'none',
   className,

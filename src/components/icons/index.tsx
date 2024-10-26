@@ -1,6 +1,8 @@
 export { default as IconCorrectSign } from './CorrectSign'
 export { default as IconDiscount } from './Discount'
 export { default as IconExit } from './Exit'
+export { default as IconEyeHide } from './EyeHide'
+export { default as IconEyeReveal } from './EyeReveal'
 export { default as IconHome } from './Home'
 export { default as IconLeaftClover } from './LeaftClover'
 export { default as IconLock } from './Lock'

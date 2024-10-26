@@ -1,13 +1,8 @@
 import { cn } from '@/lib/utils'
+import { IconType } from '@/types/iconType'
 import { FC } from 'react'
-interface IconProps {
-  size?: number
-  color?: string
-  fill?: string
-  className?: string
-}
 
-export const CheckIconRadix: FC<IconProps> = ({ size, color, fill, className }) => {
+export const CheckIconRadix: FC<IconType> = ({ size, color, fill, className }) => {
   return (
     <svg
       width={size}

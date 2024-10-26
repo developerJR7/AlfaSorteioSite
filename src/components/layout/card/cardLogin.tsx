@@ -1,4 +1,3 @@
-import { IconProps } from '@/components/icons/LeaftClover'
 import {
   Card,
   CardContent,
@@ -6,11 +5,12 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
+import { IconType } from '@/types/iconType'
 
 interface ICardForLogin {
   title: string
   option: string
-  logo: React.FC<IconProps>
+  logo: React.FC<IconType>
   content: React.ReactNode
   footer: React.ReactNode
 }

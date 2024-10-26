@@ -1,24 +1,30 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import MeninaAlfaSorteios from '@/assets/menina_alfa_sorteios.png'
+import { IconEyeHide, IconEyeReveal } from '@/components/icons'
+import IconLeafClover from '@/components/icons/LeaftClover'
+import IconLock from '@/components/icons/Lock'
+import UserCircle from '@/components/icons/UserCicle'
 import { CardForLogin } from '@/components/layout/card/cardLogin'
 import { Button } from '@/components/ui/button'
-import { LoaderCircle } from 'lucide-react'
-import UserCircle from '@/components/icons/UserCicle'
-import IconLock from '@/components/icons/Lock'
+import { Separator } from '@/components/ui/separator'
 import { toast } from '@/components/ui/use-toast'
 import { useAlfa } from '@/contexts/UserContent'
-import IconLeafClover from '@/components/icons/LeaftClover'
-import { Separator } from '@/components/ui/separator'
 import { useLogin } from '@/hooks/useAuth'
+import { ErrorResponse } from '@/types/ErrorResponse'
+import { LoaderCircle } from 'lucide-react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Welcome: React.FC = () => {
   const { signIn } = useAlfa()
   const { mutate: login, isLoading } = useLogin()
-  const [state, setState] = useState<{ email: string; pwd: string }>({
+  const [state, setState] = useState<{
+    email: string
+    pwd: string
+  }>({
     email: '',
     pwd: ''
   })
+  const [hidePwd, setHidePwd] = useState<boolean>(true)
 
   const ButtonsList = [
     {
@@ -46,12 +52,12 @@ const Welcome: React.FC = () => {
           })
           signIn(res.key)
         },
-        onError: (error) => {
-          console.error(error)
+        onError: (error: unknown) => {
+          const { response } = error as ErrorResponse
           toast({
             variant: 'destructive',
-            title: 'Erro ao realizar login',
-            description: 'Por favor, verifique suas credenciais e tente novamente.'
+            title: response.data.error,
+            description: 'repita o processo.'
           })
         }
       }
@@ -77,19 +83,40 @@ const Welcome: React.FC = () => {
             <div className="flex flex-col items-center gap-4">
               {ButtonsList.map(({ type, icon: Icon, title }, number) => (
                 <div
-                  className="flex w-full items-center gap-4 rounded-xl border-0 bg-slate-100 fill-colorPrimary-500 p-4 text-lg font-medium text-colorPrimary-500 shadow-lg"
+                  className="relative flex w-full items-center gap-4 rounded-xl border-0 bg-slate-100 fill-colorPrimary-500 p-4 text-lg font-medium text-colorPrimary-500 shadow-lg"
                   key={number + type}
                 >
                   {Icon && <Icon className="h-6 w-6" />}
                   <input
                     className="w-full bg-slate-100"
-                    type={type === 'pwd' ? 'password' : type}
+                    type={type !== 'pwd' ? type : hidePwd ? 'password' : 'text'}
                     placeholder={title}
                     value={state[type as keyof typeof state]}
                     onChange={(e) =>
                       setState((prev) => ({ ...prev, [type]: e.target.value }))
                     }
+                    onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
                   />
+                  {type === 'pwd' && (
+                    <button
+                      className="absolute right-3 top-3 flex h-fit w-fit items-center gap-2 bg-transparent p-2 transition-all duration-300 ease-in-out"
+                      onClick={() => {
+                        setHidePwd(!hidePwd)
+                      }}
+                    >
+                      {hidePwd ? (
+                        <IconEyeHide
+                          size={24}
+                          className="hover:fill-primary-default/50 fill-primary-default mr-2 transition-all duration-300 ease-in-out"
+                        />
+                      ) : (
+                        <IconEyeReveal
+                          size={24}
+                          className="hover:fill-primary-default/50 fill-primary-default mr-2 transition-all duration-300 ease-in-out"
+                        />
+                      )}
+                    </button>
+                  )}
                 </div>
               ))}
             </div>

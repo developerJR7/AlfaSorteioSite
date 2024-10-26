@@ -1,13 +1,7 @@
+import { IconType } from '@/types/iconType'
 import { FC } from 'react'
 
-interface IconProps {
-  size?: number
-  color?: string
-  fill?: string
-  className?: string
-}
-
-const IconCorrectSign: FC<IconProps> = ({ size = 32, fill = 'none', className }) => {
+const IconCorrectSign: FC<IconType> = ({ size = 32, fill = 'none', className }) => {
   return (
     <svg
       width={size}

@@ -1,11 +1,7 @@
+import { IconType } from '@/types/iconType'
 import { FC } from 'react'
-interface IconProps {
-  size?: number
-  color?: string
-  fill?: string
-  className?: string
-}
-const IconRocket: FC<IconProps> = () => {
+
+const IconRocket: FC<IconType> = () => {
   return (
     <svg
       width="315"

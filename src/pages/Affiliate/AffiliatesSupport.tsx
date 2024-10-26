@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
-import { CreateAffiliateState } from '@/hooks/AffiliateApi'
+import { CreateAffiliateState } from '@/hooks/affiliateApi'
 
 interface AffiliatesSupportProps {
   state: CreateAffiliateState

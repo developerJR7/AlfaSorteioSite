@@ -77,7 +77,7 @@ const Register: React.FC = () => {
   return (
     <div className="flex h-screen w-screen items-center justify-center overflow-x-hidden p-14">
       <Card
-        className="h-5/6 max-h-[453px] w-9/12 bg-white"
+        className="h-5/6 max-h-[453px] w-9/12 max-w-[1440px] bg-white"
         style={{
           backgroundImage: `url('${ImageHomemAlfaSorteios}')`,
           backgroundColor: 'white',

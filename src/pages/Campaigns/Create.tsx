@@ -35,9 +35,9 @@ const Create: React.FC = () => {
     second_prize: '',
     third_prize: '',
     location: '',
-    userimg: null,
+    image_base64: null,
     name_file_userimg: '',
-    userpdf: null,
+    pdf_base64: null,
     name_file_userpdf: '',
     promote_date: false,
     promote_rule: false,
@@ -64,8 +64,8 @@ const Create: React.FC = () => {
     formData.append('quota_min', stateCampaigns?.quota_min)
     formData.append('quota_time', stateCampaigns?.quota_time)
     formData.append('location', stateCampaigns?.location)
-    formData.append('userpdf', stateCampaigns?.userpdf ?? '')
-    formData.append('image_base64', stateCampaigns?.userimg ?? '')
+    formData.append('pdf_base64', stateCampaigns?.pdf_base64 ?? '')
+    formData.append('image_base64', stateCampaigns?.image_base64 ?? '')
     formData.append('status', stateCampaigns?.status)
     // formData.append('date_percent', stateCampaigns?.date_percent)
     formData.append('affiliates_percent', stateCampaigns?.affiliate_percent)

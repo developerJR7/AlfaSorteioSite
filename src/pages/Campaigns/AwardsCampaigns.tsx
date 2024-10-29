@@ -16,9 +16,9 @@ const AwardsCampaigns: React.FC<AwardsCampaignsProps> = ({ state, setState }) =>
         <label className="text-base font-semibold text-black">
           Banner da Campanha
         </label>
-        {state?.userimg !== null ? (
+        {state?.image_base64 !== null ? (
           <img
-            src={typeof state.userimg === 'string' ? state.userimg : ''}
+            src={typeof state.image_base64 === 'string' ? state.image_base64 : ''}
             alt="Banner"
             className="h-[442px] min-w-[382px] rounded-lg object-cover"
           />
@@ -36,7 +36,7 @@ const AwardsCampaigns: React.FC<AwardsCampaignsProps> = ({ state, setState }) =>
                 <button
                   className="size-4 rounded-full"
                   onClick={() =>
-                    setState({ ...state, userimg: null, name_file_userimg: '' })
+                    setState({ ...state, image_base64: null, name_file_userimg: '' })
                   }
                 >
                   X
@@ -75,7 +75,7 @@ const AwardsCampaigns: React.FC<AwardsCampaignsProps> = ({ state, setState }) =>
                     const target = e.target as FileReader
                     setState({
                       ...state,
-                      userimg: target.result as string,
+                      image_base64: target.result as string,
                       name_file_userimg: file?.name ?? ''
                     })
                   }

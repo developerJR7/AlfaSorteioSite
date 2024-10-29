@@ -3,7 +3,7 @@ import Campanha from '@/pages/Campaigns'
 import Create from '@/pages/Campaigns/Create'
 import Home from '@/pages/Home'
 import Financas from '@/pages/Finance'
-import Promoções from '@/pages/Promotions'
+import Promocoes from '@/pages/Promotions'
 import ConfigPromotions from '@/pages/Promotions/ConfigPromotions'
 import Relatorios from '@/pages/Reports'
 import React from 'react'
@@ -25,14 +25,18 @@ export const RotasPrivadas: React.FC = () => {
         </Route>
 
         {/* Afiliados */}
-        <Route path="/affiliates" element={<Afiliados />} />
+        <Route path="/affiliates">
+          <Route index element={<Afiliados />} />
+          <Route path="create" element={<Create />} />{' '}
+          {/* Adicionando rota para criar campanhas */}
+        </Route>
 
         {/* Finanças */}
         <Route path="/finance" element={<Financas />} />
 
         {/* Promotions */}
         <Route path="/promotions">
-          <Route index element={<Promoções />} />
+          <Route index element={<Promocoes />} />
           <Route path="configpromotions" element={<ConfigPromotions />} />{' '}
           {/* Nova rota */}
         </Route>

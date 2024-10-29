@@ -28,6 +28,33 @@ const LocationCampaigns = {
 }
 
 const ConfigCampaigns: React.FC<configCampaignsProps> = ({ state, setState }) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const file = e.target.files ? e.target.files[0] : null
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const target = e.target as FileReader
+        const base64File = target.result?.toString().split(',')[1]
+        if (base64File) {
+          setState({
+            ...state,
+            pdf_base64: `data:application/pdf;base64,${base64File}`,
+            name_file_userpdf: file.name
+          })
+        } else {
+          console.error('Failed to convert file to base64')
+        }
+      }
+      reader.onerror = (error) => {
+        console.error('Error reading file:', error)
+      }
+      reader.readAsDataURL(file)
+    } else {
+      console.error('No file selected')
+    }
+  }
+
   return (
     <>
       <div className="grid grid-cols-2 gap-8 text-sm font-normal text-black">
@@ -288,7 +315,7 @@ const ConfigCampaigns: React.FC<configCampaignsProps> = ({ state, setState }) =>
                 <button
                   className="size-4 rounded-full"
                   onClick={() =>
-                    setState({ ...state, userpdf: null, name_file_userpdf: '' })
+                    setState({ ...state, pdf_base64: null, name_file_userpdf: '' })
                   }
                 >
                   X
@@ -311,32 +338,7 @@ const ConfigCampaigns: React.FC<configCampaignsProps> = ({ state, setState }) =>
               type="file"
               accept=".pdf"
               className="hidden"
-              onChange={(e) => {
-                e.preventDefault()
-                const file = e.target.files ? e.target.files[0] : null
-                if (file) {
-                  const reader = new FileReader()
-                  reader.onload = (e) => {
-                    const target = e.target as FileReader
-                    const base64File = target.result?.toString().split(',')[1]
-                    if (base64File) {
-                      setState({
-                        ...state,
-                        userpdf: base64File,
-                        name_file_userpdf: file.name
-                      })
-                    } else {
-                      console.error('Failed to convert file to base64')
-                    }
-                  }
-                  reader.onerror = (error) => {
-                    console.error('Error reading file:', error)
-                  }
-                  reader.readAsDataURL(file)
-                } else {
-                  console.error('No file selected')
-                }
-              }}
+              onChange={handleFileChange}
             />
           </div>
         </div>

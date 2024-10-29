@@ -5,12 +5,12 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogTitle, DialogContent } from '@radix-ui/react-dialog'
 import { toast } from '@/components/ui/use-toast'
 import MarketingMaterials from './MarketingMaterials'
-import AffiliatesSupport from './affiliatesSupport'
+import AffiliatesSupport from './AffiliatesSupport'
 import AffiliatesRules from './AffiliateRules'
 import { Stepper } from './Stteper'
 import PaymentsAffiliates from './PaymentsAffiliates'
-import { useCreateAffiliate } from '@/hooks/AffiliateApi'
-import { CreateAffiliateState } from '@/hooks/AffiliateApi'
+import { useCreateAffiliate } from '@/hooks/affiliateApi'
+import { CreateAffiliateState } from '@/hooks/affiliateApi'
 
 const CreateAffiliates: React.FC = () => {
   const { mutate: createAffiliate, isLoading } = useCreateAffiliate()

@@ -14,9 +14,9 @@ const ReviewCampaigns: React.FC<ReviewCampaignsProps> = ({ state }) => {
 
   return (
     <div className="flex">
-      <div className="flex  h-[calc(100dvh-24rem)] w-[382px] flex-col items-center gap-2 overflow-auto rounded-xl border-2 border-gray-300 bg-[#E6E6E6] p-2">
+      <div className="flex  h-auto w-[382px] flex-col items-center gap-2 overflow-auto rounded-xl border-2 border-gray-300 bg-[#E6E6E660] py-2">
         <img
-          src={typeof state.userimg === 'string' ? state.userimg : ''}
+          src={typeof state.image_base64 === 'string' ? state.image_base64 : ''}
           alt="Banner"
           className="h-fit w-8/12 rounded-lg object-cover"
         />

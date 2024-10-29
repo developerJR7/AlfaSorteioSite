@@ -21,9 +21,9 @@ export type StateCampaignsType = {
   quota_time: string
   location: string
   status: string
-  userimg: string | Blob | null
+  image_base64: string | Blob | null
   name_file_userimg: string
-  userpdf: string | Blob | null
+  pdf_base64: string | Blob | null
   name_file_userpdf: string
   date_percent: string
   affiliate_percent: string

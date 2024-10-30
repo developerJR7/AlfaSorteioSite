@@ -1,7 +1,11 @@
-declare namespace App {
-  export interface PromotionsProps {
-    name: string
-    linkedCampaign: string
-    totalValue: number
-  }
+export type PromotionStatetype = {
+  id_campaign: nu
+  id: number
+  campaign_name: string
+  name: string
+  description: string
+  start_date: string
+  end_date: string
+  min_quotas: number
+  promotional_price: number
 }

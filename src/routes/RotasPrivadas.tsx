@@ -6,9 +6,10 @@ import Financas from '@/pages/Finance'
 import Promocoes from '@/pages/Promotions'
 import ConfigPromotions from '@/pages/Promotions/ConfigPromotions'
 import Relatorios from '@/pages/Reports'
+import Afiliados from '@/pages/Affiliate'
+import CreateAffiliates from '@/pages/Affiliate/CreateAffiliates'
 import React from 'react'
 import { Navigate, Routes as ReactRoutes, Route } from 'react-router-dom'
-import Afiliados from '@/pages/Affiliate'
 
 export const RotasPrivadas: React.FC = () => {
   return (
@@ -26,9 +27,9 @@ export const RotasPrivadas: React.FC = () => {
 
         {/* Afiliados */}
         <Route path="/affiliates">
-          <Route index element={<Afiliados />} />
-          <Route path="create" element={<Create />} />{' '}
-          {/* Adicionando rota para criar campanhas */}
+          <Route index element={<Afiliados />} /> {/* Página inicial de afiliados */}
+          <Route path="create" element={<CreateAffiliates />} />{' '}
+          {/* Formulário de criação de afiliados */}
         </Route>
 
         {/* Finanças */}
@@ -37,8 +38,7 @@ export const RotasPrivadas: React.FC = () => {
         {/* Promotions */}
         <Route path="/promotions">
           <Route index element={<Promocoes />} />
-          <Route path="configpromotions" element={<ConfigPromotions />} />{' '}
-          {/* Nova rota */}
+          <Route path="configpromotions" element={<ConfigPromotions />} />
         </Route>
 
         {/* Relatórios */}

@@ -1,4 +1,3 @@
-import md5 from 'md5'
 import { useMutation } from 'react-query'
 import { api } from '../api/Api'
 
@@ -47,10 +46,19 @@ const useForgotPassword = () => {
 
 const useResetPassword = () => {
   return useMutation(
-    async ({ token, newPassword }: { token: string; newPassword: string }) => {
-      const { data } = await api.post('/actions/reset_password', {
+    async ({
+      email,
+      token,
+      new_password
+    }: {
+      email: string
+      token: string
+      new_password: string
+    }) => {
+      const { data } = await api.post('/actions/change_password', {
+        email,
         token,
-        newPassword: md5(newPassword)
+        new_password
       })
       return data
     }

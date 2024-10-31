@@ -4,33 +4,33 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import { Toaster } from './components/ui/toaster.tsx'
-import './styles/global.css'
 import { UserProvider } from './contexts/UserContent.tsx'
+import './styles/global.css'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } }
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
-    <React.StrictMode>
+  <React.StrictMode>
+    <Suspense
+      fallback={
+        <iframe
+          src="https://giphy.com/embed/l0GRk3KHYv2W6hmJG"
+          width="480"
+          height="480"
+          allowFullScreen
+        />
+      }
+    >
       <QueryClientProvider client={queryClient}>
-        <Suspense
-          fallback={
-            <iframe
-              src="https://giphy.com/embed/l0GRk3KHYv2W6hmJG"
-              width="480"
-              height="480"
-              allowFullScreen
-            />
-          }
-        >
+        <BrowserRouter>
           <UserProvider>
             <App />
             <Toaster />
           </UserProvider>
-        </Suspense>
+        </BrowserRouter>
       </QueryClientProvider>
-    </React.StrictMode>
-  </BrowserRouter>
+    </Suspense>
+  </React.StrictMode>
 )

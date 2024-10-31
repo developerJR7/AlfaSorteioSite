@@ -1,26 +1,24 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import EsqueceuASenha from '@/assets/esqueceu_a_senha.png'
+import IconLeafClover from '@/components/icons/LeaftClover'
 import { CardForLogin } from '@/components/layout/card/cardLogin'
 import { Button } from '@/components/ui/button'
-import { LoaderCircle } from 'lucide-react'
-import IconLeafClover from '@/components/icons/LeaftClover'
-import { toast } from '@/components/ui/use-toast'
 import { Separator } from '@/components/ui/separator'
+import { toast } from '@/components/ui/use-toast'
 import { useForgotPassword } from '@/hooks/useAuth'
-import EsqueceuASenha from '@/assets/esqueceu_a_senha.png'
+import { LoaderCircle } from 'lucide-react'
+import React, { ChangeEvent, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const ForgotPassword: React.FC = () => {
-  const navigate = useNavigate()
   const { mutate: forgotPassword, isLoading } = useForgotPassword()
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState<string>('')
 
   const handleForgotPassword = async () => {
     forgotPassword(
       { email },
       {
         onSuccess: (res: { token: string }) => {
-          navigate('https://alfasorteios.com/reset_password/' + res.token)
-
+          console.log(res)
           toast({
             variant: 'success',
             title: 'E-mail enviado!',
@@ -62,7 +60,10 @@ const ForgotPassword: React.FC = () => {
                   type="email"
                   placeholder="Digite seu e-mail"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    setEmail(e.target.value)
+                    localStorage.setItem('email', e.target.value)
+                  }}
                 />
               </div>
             </div>

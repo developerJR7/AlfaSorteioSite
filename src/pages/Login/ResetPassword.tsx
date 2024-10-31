@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import EsqueceuASenha from '@/assets/esqueceu_a_senha.png'
+import IconLeafClover from '@/components/icons/LeaftClover'
 import { CardForLogin } from '@/components/layout/card/cardLogin'
 import { Button } from '@/components/ui/button'
-import { LoaderCircle } from 'lucide-react'
-import IconLeafClover from '@/components/icons/LeaftClover'
-import { toast } from '@/components/ui/use-toast'
 import { Separator } from '@/components/ui/separator'
+import { toast } from '@/components/ui/use-toast'
 import { useResetPassword } from '@/hooks/useAuth'
-import EsqueceuASenha from '@/assets/esqueceu_a_senha.png'
+import { LoaderCircle } from 'lucide-react'
+import React, { useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 const ResetPassword: React.FC = () => {
   const { token } = useParams<{ token: string }>()
@@ -36,7 +36,11 @@ const ResetPassword: React.FC = () => {
     }
 
     resetPassword(
-      { token, newPassword },
+      {
+        email: localStorage.getItem('email') ?? '',
+        token: token,
+        new_password: newPassword
+      },
       {
         onSuccess: () => {
           toast({

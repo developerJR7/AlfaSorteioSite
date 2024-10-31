@@ -12,6 +12,7 @@ export const RotasPublicas: React.FC = () => {
       <Route path="/" Component={Welcome} />
       <Route path="/login" Component={Login} />
       <Route path="/forgot-password" Component={ForgotPassword} />
+      <Route path="/reset_password/:token" Component={ResetPassword} />{' '}
       <Route path="/reset-password/:token" Component={ResetPassword} />{' '}
       {/* Adicione esta rota */}
       <Route path="/register" Component={Register} />

@@ -28,24 +28,16 @@ export const ColumnsAffiliates: ColumnDef<AffiliatesListProps>[] = [
     }
   },
   {
-    accessorKey: 'linkedCampaign',
+    accessorKey: 'id_campaign',
     header: () => 'Campanha Vinculada',
     cell: ({ row }) => {
-      const linkedCampaign = row.getValue<string>('linkedCampaign')
+      const linkedCampaign = row.getValue<string>('id_campaign')
       return <div className="text-xs">{linkedCampaign}</div>
     }
   },
   {
-    accessorKey: 'totalValue',
-    header: () => 'Excluir Afiliado',
-    cell: ({ row }) => {
-      const totalValue = row.getValue<number>('totalValue')
-      return <div className="text-xs">R$ {totalValue}</div>
-    }
-  },
-  {
     accessorKey: '#',
-    header: () => '',
+    header: () => 'Excluir Afiliado',
     cell: () => {
       return (
         <div className="flex items-center">

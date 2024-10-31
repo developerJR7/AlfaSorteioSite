@@ -34,5 +34,4 @@ export type StateCampaignsType = {
   prize: string
   second_prize: string
   third_prize: string
-  modalSuccess: boolean
 }

@@ -136,8 +136,7 @@ const InfoCampaigns: React.FC<infoCampaignsProps> = ({ state, setState }) => {
               className="bg-white shadow-sm"
               value={state.mask_phone}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                const { formattedKey, type } = MaskInput(e.target.value)
-                console.log(formattedKey, type)
+                const { formattedKey } = MaskInput(e.target.value)
                 setState({
                   ...state,
                   mask_phone: formattedKey,
@@ -154,8 +153,7 @@ const InfoCampaigns: React.FC<infoCampaignsProps> = ({ state, setState }) => {
             placeholder="E-mail de suporte*"
             value={state.mask_email}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const { formattedKey, type } = MaskInput(e.target.value)
-              console.log(formattedKey, type)
+              const { formattedKey } = MaskInput(e.target.value)
               setState({
                 ...state,
                 mask_email: formattedKey,

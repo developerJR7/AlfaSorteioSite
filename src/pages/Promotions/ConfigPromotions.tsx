@@ -9,12 +9,14 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import React, { useState } from 'react'
 import { PromotionStatetype } from '@/types/promotions'
+import React, { useState } from 'react'
 
 const ConfigPromotions: React.FC = () => {
   const [state, setState] = useState<PromotionStatetype>({
-    id_campaign: '',
+    id: 0,
+    id_campaign: 0,
+    campaign_name: '',
     name: '',
     description: '',
     start_date: '',
@@ -73,10 +75,10 @@ const ConfigPromotions: React.FC = () => {
               onValueChange={(value) =>
                 setState((prevState) => ({
                   ...prevState,
-                  id_campaign: value
+                  id_campaign: Number(value)
                 }))
               }
-              value={state.id_campaign}
+              value={state.id_campaign.toString()}
             >
               <SelectTrigger className="bg-white shadow-sm">
                 <SelectValue placeholder="Selecione uma campanha" />

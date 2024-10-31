@@ -1,5 +1,5 @@
 export type PromotionStatetype = {
-  id_campaign: nu
+  id_campaign: number
   id: number
   campaign_name: string
   name: string

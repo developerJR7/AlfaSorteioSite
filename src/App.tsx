@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
-import { RotasPublicas } from './routes/RotasPublicas'
 import { useAlfa } from './contexts/UserContent'
 import { RotasPrivadas } from './routes/RotasPrivadas'
+import { RotasPublicas } from './routes/RotasPublicas'
 
 const App: React.FC = () => {
   const { checkUserIsAuthenticated, isAuthenticated } = useAlfa()
 
   useEffect(() => {
-    console.log(isAuthenticated)
     checkUserIsAuthenticated()
   }, [])
 

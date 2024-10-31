@@ -52,7 +52,7 @@ export function DataTable<TData, TValue>({
     >
       <div className="md:w-full md:overflow-x-auto">
         <Table>
-          <TableHeader className="text-xs text-colorPrimary-500">
+          <TableHeader className="text-primary-default text-xs">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={generateKey('header', headerGroup.id, keySet)}>
                 {headerGroup.headers.map((header) => (

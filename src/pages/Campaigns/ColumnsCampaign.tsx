@@ -19,7 +19,7 @@ export const ColumnsCampaigns: ColumnDef<campaignsType>[] = [
     header: () => 'Nome da Campanha',
     cell: ({ row }) => {
       const name = row.getValue<string>('name')
-      return <div className="text-xs">{name}</div>
+      return <div className="text-xs capitalize">{name}</div>
     }
   },
   {
@@ -27,7 +27,7 @@ export const ColumnsCampaigns: ColumnDef<campaignsType>[] = [
     header: () => 'Performance',
     cell: ({ row }) => {
       const performance = row.getValue<number>('performance')
-      return <div className="text-xs">{performance}%</div>
+      return <div className="text-xs">{performance ? `${performance} %` : '-'}</div>
     }
   },
   {
@@ -35,7 +35,7 @@ export const ColumnsCampaigns: ColumnDef<campaignsType>[] = [
     header: () => 'Valor Arrecadado',
     cell: ({ row }) => {
       const totalValue = row.getValue<number>('totalValue')
-      return <div className="text-xs">R$ {totalValue}</div>
+      return <div className="text-xs">{totalValue ? `R$ ${totalValue}` : '-'}</div>
     }
   },
   {

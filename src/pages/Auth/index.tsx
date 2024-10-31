@@ -1,5 +1,5 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import IconCorrectSign from '@/components/icons/CorrectSign'
+import IconLeafClover from '@/components/icons/LeaftClover'
 import {
   Card,
   CardContent,
@@ -8,8 +8,8 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import IconLeafClover from '@/components/icons/LeaftClover'
-import IconCorrectSign from '@/components/icons/CorrectSign'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Welcome: React.FC = () => {
   const navigate = useNavigate()
@@ -46,8 +46,8 @@ const Welcome: React.FC = () => {
             Aqui estão algumas das funcionalidades que você encontra na plataforma.
           </p>
           <div className="grid grid-cols-3 grid-rows-2">
-            {CorrectPhase.map(({ text, title }) => (
-              <div className="flex items-center justify-start gap-2">
+            {CorrectPhase.map(({ text, title }, index) => (
+              <div key={index} className="flex items-center justify-start gap-2">
                 <IconCorrectSign color="#A0AEC0" size={24} />
                 <span className=" text-xs font-normal text-black">{text}</span>
                 <span className=" text-xs font-semibold  text-black">{title}</span>

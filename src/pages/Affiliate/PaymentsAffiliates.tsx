@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import {
   Select,
-  SelectTrigger,
   SelectContent,
   SelectItem,
+  SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
+import React, { useState } from 'react'
 
 interface PaymentsAffiliatesProps {
   state: {
@@ -42,21 +42,7 @@ const PaymentsAffiliates: React.FC<PaymentsAffiliatesProps> = ({
     setSelectOption(value)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (
-      !selectOption ||
-      !state.name ||
-      !state.email ||
-      !state.telefone ||
-      !state.address
-    ) {
-      alert('Por favor, preencha todos os campos obrigatórios.')
-      return
-    }
-
-    console.log('Formulário enviado com sucesso')
-  }
+  console.log(state)
 
   return (
     <div className="flex flex-col gap-4">

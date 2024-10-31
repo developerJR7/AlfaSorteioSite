@@ -1,14 +1,11 @@
 import { IconTicket } from '@/components/icons'
 import { Container } from '@/components/layout/container'
 import { Button } from '@/components/ui/button'
-import { DialogContent } from '@/components/ui/dialog'
 import { toast } from '@/components/ui/use-toast'
 import { createCampaign } from '@/hooks/campaingsApi'
-import { cn } from '@/lib/utils'
 import { StateCampaignsType } from '@/types/campaings'
 import { ErrorResponse } from '@/types/ErrorResponse'
-import { Dialog, DialogTitle } from '@radix-ui/react-dialog'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import AwardsCampaigns from './AwardsCampaigns'
 import CampaignsSuccess from './CampaignsSuccess'
 import ConfigCampaigns from './ConfigCampaigns'
@@ -46,8 +43,7 @@ const Create: React.FC = () => {
     affiliate_percent: '',
     quota_time: '',
     status: 'active',
-    date_percent: '',
-    modalSuccess: false
+    date_percent: ''
   })
 
   const handleCreateCampaign = async () => {
@@ -76,7 +72,7 @@ const Create: React.FC = () => {
     campaign(formData, {
       onSuccess: (res: any) => {
         console.log(res)
-        setStateCampaigns((prev) => ({ ...prev, step: 5, modalSuccess: true }))
+        setStateCampaigns((prev) => ({ ...prev, step: 5 }))
       },
       onError: (error: unknown) => {
         const { response } = error as ErrorResponse
@@ -119,10 +115,6 @@ const Create: React.FC = () => {
         return null
     }
   }
-
-  useEffect(() => {
-    console.log('-->>', stateCampaigns)
-  }, [stateCampaigns])
 
   return (
     <Container>
@@ -175,21 +167,6 @@ const Create: React.FC = () => {
           )}
         </div>
       </div>
-      <>
-        <Dialog
-          open={stateCampaigns.modalSuccess}
-          onOpenChange={() =>
-            setStateCampaigns({
-              ...stateCampaigns,
-              modalSuccess: !stateCampaigns.modalSuccess
-            })
-          }
-        >
-          <DialogContent className={cn('h-[40%] w-[30%]')}>
-            <DialogTitle>Criando nova Campanha!</DialogTitle>
-          </DialogContent>
-        </Dialog>
-      </>
     </Container>
   )
 }

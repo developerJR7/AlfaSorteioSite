@@ -17,6 +17,7 @@ const ModalConfirm: React.FC<ModalConfirmProps> = ({
   back,
   loading = false
 }) => {
+  console.log(loading)
   return (
     <section className="flex flex-col gap-2">
       <div className="flex items-center gap-2">

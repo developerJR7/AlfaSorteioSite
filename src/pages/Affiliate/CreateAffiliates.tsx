@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react'
 import { IconMoneyShare } from '@/components/icons'
 import { Container } from '@/components/layout/container'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogTitle, DialogContent } from '@radix-ui/react-dialog'
 import { toast } from '@/components/ui/use-toast'
-import MarketingMaterials from './MarketingMaterials'
-import AffiliatesSupport from './AffiliatesSupport'
+import { CreateAffiliateState, useCreateAffiliate } from '@/hooks/affiliateApi'
+import { Dialog, DialogContent, DialogTitle } from '@radix-ui/react-dialog'
+import React, { useEffect, useState } from 'react'
 import AffiliatesRules from './AffiliateRules'
-import { Stepper } from './Stteper'
+import AffiliatesSupport from './AffiliatesSupport'
+import MarketingMaterials from './MarketingMaterials'
 import PaymentsAffiliates from './PaymentsAffiliates'
-import { useCreateAffiliate } from '@/hooks/affiliateApi'
-import { CreateAffiliateState } from '@/hooks/affiliateApi'
+import { Stepper } from './Stteper'
 
 const CreateAffiliates: React.FC = () => {
   const { mutate: createAffiliate, isLoading } = useCreateAffiliate()
@@ -39,6 +38,7 @@ const CreateAffiliates: React.FC = () => {
           setAffiliateState((prev) => ({ ...prev, step: 5 }))
         },
         onError: (error: unknown) => {
+          console.error(error)
           toast({
             variant: 'destructive',
             title: 'Erro ao criar afiliado',

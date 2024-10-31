@@ -11,10 +11,10 @@ const AffiliatesSupport: React.FC<AffiliatesSupportProps> = ({
   state,
   setState
 }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setState((prev) => ({ ...prev, [name]: value }))
-  }
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target
+  //   setState((prev) => ({ ...prev, [name]: value }))
+  // }
 
   return (
     <div>

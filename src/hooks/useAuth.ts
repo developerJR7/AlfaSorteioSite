@@ -2,7 +2,6 @@ import md5 from 'md5'
 import { useMutation } from 'react-query'
 import { api } from '../api/Api'
 
-// Hook para login
 const useLogin = () => {
   return useMutation(async ({ email, pwd }: { email: string; pwd: string }) => {
     const { data } = await api.post('/actions/login', {
@@ -13,7 +12,6 @@ const useLogin = () => {
   })
 }
 
-// Hook para registro
 const useRegister = () => {
   return useMutation(
     async ({
@@ -33,19 +31,16 @@ const useRegister = () => {
         phone,
         pwd: pwd
       })
-      console.log('API Response:', data)
       return data
     }
   )
 }
 
-// Hook para recuperação de senha
 const useForgotPassword = () => {
   return useMutation(async ({ email }: { email: string }) => {
     const { data } = await api.post('/actions/token_gen', {
       email
     })
-    console.log('API Response:', data)
     return data
   })
 }
@@ -57,7 +52,6 @@ const useResetPassword = () => {
         token,
         newPassword: md5(newPassword)
       })
-      console.log('API Response:', data)
       return data
     }
   )

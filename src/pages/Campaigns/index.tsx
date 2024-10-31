@@ -1,6 +1,7 @@
 import { IconTicket } from '@/components/icons'
 import IconLupa from '@/components/icons/Lupa'
 import { Container } from '@/components/layout/container'
+
 import { DataTable } from '@/components/Table'
 import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'

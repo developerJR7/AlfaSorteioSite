@@ -9,14 +9,25 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import { PromotionStatetype } from '@/types/promotions'
+import { listCampaigns } from '@/hooks/campaingsApi'
 import React, { useState } from 'react'
+import { useQuery } from 'react-query'
+
+import { campaignsType } from '@/types/campaings'
+
+interface PromotionState {
+  id_campaign: string
+  name: string
+  description: string
+  start_date: string
+  end_date: string
+  min_quotas: number
+  promotional_price: number
+}
 
 const ConfigPromotions: React.FC = () => {
-  const [state, setState] = useState<PromotionStatetype>({
-    id: 0,
-    id_campaign: 0,
-    campaign_name: '',
+  const [state, setState] = useState<PromotionState>({
+    id_campaign: '',
     name: '',
     description: '',
     start_date: '',
@@ -25,12 +36,17 @@ const ConfigPromotions: React.FC = () => {
     promotional_price: 0
   })
 
-  const [showOptions, setShowOptions] = useState(false)
-  const [campaigns, setCampaigns] = useState([
-    { id: 'campaign1', name: 'Campanha 1' },
-    { id: 'campaign2', name: 'Campanha 2' },
-    { id: 'campaign3', name: 'Campanha 3' }
-  ])
+  const {
+    data: campaigns,
+    isLoading,
+    isError
+  } = useQuery<campaignsType[]>({
+    queryKey: 'campaigns',
+    queryFn: async () => {
+      const res = await listCampaigns()
+      return res
+    }
+  })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -44,16 +60,10 @@ const ConfigPromotions: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target
-    setState((prevState: PromotionStatetype) => ({
+    setState((prevState: PromotionState) => ({
       ...prevState,
       [id]: value
     }))
-  }
-
-  const handleRemoveCampaign = (id: string) => {
-    setCampaigns((prevCampaigns) =>
-      prevCampaigns.filter((campaign) => campaign.id !== id)
-    )
   }
 
   return (
@@ -72,21 +82,35 @@ const ConfigPromotions: React.FC = () => {
               Selecione a Campanha*
             </label>
             <Select
-              onValueChange={(value) =>
-                setState((prevState) => ({
-                  ...prevState,
-                  id_campaign: Number(value)
-                }))
+              defaultValue={state.id_campaign}
+              onValueChange={(e) =>
+                setState({
+                  ...state,
+                  id_campaign: e
+                })
               }
-              value={state.id_campaign.toString()}
             >
               <SelectTrigger className="bg-white shadow-sm">
                 <SelectValue placeholder="Selecione uma campanha" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="campaign1">Campanha 1</SelectItem>
-                <SelectItem value="campaign2">Campanha 2</SelectItem>
-                <SelectItem value="campaign3">Campanha 3</SelectItem>
+                {isLoading ? (
+                  <SelectItem value="loading">Carregando...</SelectItem>
+                ) : isError ? (
+                  <SelectItem value="error">Erro ao carregar campanhas</SelectItem>
+                ) : (campaigns ?? []).length === 0 ? (
+                  <SelectItem value="no-data">
+                    Nenhuma campanha disponível
+                  </SelectItem>
+                ) : (
+                  (campaigns ?? [])
+                    //.filter((campaign) => campaign.status === 'active')
+                    .map((campaign) => (
+                      <SelectItem key={campaign.id} value={campaign.id}>
+                        {campaign.name}
+                      </SelectItem>
+                    ))
+                )}
               </SelectContent>
             </Select>
           </div>
@@ -177,49 +201,12 @@ const ConfigPromotions: React.FC = () => {
             </div>
           </div>
 
-          {/* Botão Adicionar e Botão Avançar */}
-          <div className="mt-6 flex justify-between">
-            <Button
-              type="button"
-              onClick={() => setShowOptions(!showOptions)}
-              className="h-10 w-32 rounded-md bg-green-500 font-semibold text-white"
-            >
-              Adicionar
-            </Button>
-            <Button
-              type="submit"
-              className="h-10 w-32 rounded-md bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-4 py-2 font-semibold text-slate-950 transition-all duration-300 hover:text-white"
-            >
-              Avançar
-            </Button>
-          </div>
-
-          {/* Opções de Campanhas com Checkboxes e Opção de Excluir */}
-          {showOptions && (
-            <div className="mt-4 text-left">
-              <p className="font-bold">Campanhas disponíveis:</p>
-              <ul className="pl-4">
-                {campaigns.map((campaign) => (
-                  <li key={campaign.id} className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      id={campaign.id}
-                      name={campaign.name}
-                      className="mr-2"
-                    />
-                    <label htmlFor={campaign.id}>{campaign.name}</label>
-                    <Button
-                      type="button"
-                      onClick={() => handleRemoveCampaign(campaign.id)}
-                      className="ml-2 text-red-500"
-                    >
-                      Excluir
-                    </Button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          <Button
+            type="submit"
+            className="h-10 w-32 rounded-md bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-4 py-2 font-semibold text-slate-950 transition-all duration-300 hover:text-white"
+          >
+            Avançar
+          </Button>
         </form>
       </div>
     </Container>

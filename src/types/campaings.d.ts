@@ -1,4 +1,6 @@
 export type campaignsType = {
+  id: Key | null | undefined
+  status: string
   created: string
   description: string
   image: string
@@ -34,4 +36,9 @@ export type StateCampaignsType = {
   prize: string
   second_prize: string
   third_prize: string
+}
+export type campaignsType = {
+  id: string
+  name: string
+  status: string
 }

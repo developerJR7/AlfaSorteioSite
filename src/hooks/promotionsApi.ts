@@ -3,9 +3,13 @@ import { PromotionStatetype } from '@/types/promotions'
 
 import { useMutation } from 'react-query'
 
+interface PromotionType {
+  sales: PromotionStatetype[]
+}
+
 export const listPromotions = async () => {
-  const response = await api.get<PromotionStatetype[]>('/user/quotas/list_sales')
-  return response.data
+  const response = await api.get<PromotionType>('/user/quotas/list_sales')
+  return response.data.sales
 }
 
 export const createPromotion = () => {

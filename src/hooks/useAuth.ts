@@ -37,7 +37,7 @@ const useRegister = () => {
 
 const useForgotPassword = () => {
   return useMutation(async ({ email }: { email: string }) => {
-    const { data } = await api.post('/actions/token_gen', {
+    const { data } = await api.post('/actions/reset_password', {
       email
     })
     return data

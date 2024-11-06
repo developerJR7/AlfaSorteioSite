@@ -4,7 +4,7 @@ import { useMutation, useQuery } from 'react-query'
 
 const usePromotionsInfo = () => {
   return useQuery('list-promotions', async () => {
-    const { data } = await api.get<PromotionType>('user/promotion/list')
+    const { data } = await api.get<PromotionType>('user/promotion/list_sales')
     return data.sales
   })
 }

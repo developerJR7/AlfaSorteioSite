@@ -9,7 +9,10 @@ interface StepperProps {
   }[]
 }
 
-export const Stepper: React.FC<StepperProps> = ({ currentStep, stepsControl }) => {
+const StepperPageCampaigns: React.FC<StepperProps> = ({
+  currentStep,
+  stepsControl
+}) => {
   const calcProgressBefore = (current: number, total: number): string => {
     const cl = (current / total) * 100
     return `before:w-[${cl}%]`
@@ -59,3 +62,5 @@ export const Stepper: React.FC<StepperProps> = ({ currentStep, stepsControl }) =
     </nav>
   )
 }
+
+export default StepperPageCampaigns

@@ -11,7 +11,7 @@ import { Separator } from '@/components/ui/separator'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Welcome: React.FC = () => {
+const HomePageAuth: React.FC = () => {
   const navigate = useNavigate()
 
   const handleLogin = () => {
@@ -78,4 +78,4 @@ const Welcome: React.FC = () => {
   )
 }
 
-export default Welcome
+export default HomePageAuth

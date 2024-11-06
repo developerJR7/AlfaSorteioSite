@@ -4,7 +4,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
-import { PromotionStatetype } from '@/types/promotions'
+import { PromotionStatetype } from '@/types/PromotionType'
 import { ColumnDef } from '@tanstack/react-table'
 import { Trash2 } from 'lucide-react'
 

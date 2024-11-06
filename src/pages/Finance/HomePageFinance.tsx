@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Relatorios: React.FC = () => {
+const HomePageFinance: React.FC = () => {
   return (
     <div>
       <h1>Página de Afiliados</h1>
@@ -8,4 +8,4 @@ const Relatorios: React.FC = () => {
   )
 }
 
-export default Relatorios
+export default HomePageFinance

@@ -1,12 +1,10 @@
+import md5 from 'md5'
 import { useMutation } from 'react-query'
 import { api } from '../api/Api'
 
 const useLogin = () => {
   return useMutation(async ({ email, pwd }: { email: string; pwd: string }) => {
-    const { data } = await api.post('/actions/login', {
-      email,
-      pwd
-    })
+    const { data } = await api.post('/actions/login', { email, pwd: md5(pwd) })
     return data
   })
 }

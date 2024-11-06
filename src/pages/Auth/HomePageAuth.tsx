@@ -125,7 +125,7 @@ const Welcome: React.FC = () => {
             <div className="flex w-full flex-col gap-4">
               <div className="flex flex-col items-end justify-end gap-4">
                 <Link
-                  to="/forgot-Password"
+                  to="/forgot_password"
                   className="text-sm font-semibold text-colorPrimary-500"
                 >
                   Esqueceu sua senha

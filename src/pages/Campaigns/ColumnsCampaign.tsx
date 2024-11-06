@@ -9,7 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
-import { campaignsType } from '@/types/campaings'
+import { campaignsType } from '@/types/CampaingType'
 import { ColumnDef } from '@tanstack/react-table'
 import { Bolt } from 'lucide-react'
 

@@ -1,7 +1,7 @@
 import IconMegaphone from '@/components/icons/MegaPhone'
 import IconPrize from '@/components/icons/Prize'
 import { Button } from '@/components/ui/button'
-import { StateCampaignsType } from '@/types/campaings'
+import { StateCampaignsType } from '@/types/CampaingType'
 import React, { Dispatch, SetStateAction } from 'react'
 
 interface ReviewCampaignsProps {
@@ -9,7 +9,7 @@ interface ReviewCampaignsProps {
   setState: Dispatch<SetStateAction<StateCampaignsType>>
 }
 
-const ReviewCampaigns: React.FC<ReviewCampaignsProps> = ({ state }) => {
+const ReviewPageCampaigns: React.FC<ReviewCampaignsProps> = ({ state }) => {
   //const isFormValid = true
 
   return (
@@ -101,4 +101,4 @@ const ReviewCampaigns: React.FC<ReviewCampaignsProps> = ({ state }) => {
   )
 }
 
-export default ReviewCampaigns
+export default ReviewPageCampaigns

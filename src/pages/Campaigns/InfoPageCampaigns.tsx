@@ -11,7 +11,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
-import { StateCampaignsType } from '@/types/campaings'
+import { StateCampaignsType } from '@/types/CampaingType'
 import { MaskInput } from '@/utils/MaskInput'
 import { ChevronDown } from 'lucide-react'
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
@@ -23,12 +23,13 @@ interface DDIProps {
   ddi: number
   continente: string
 }
+
 interface infoCampaignsProps {
   state: StateCampaignsType
   setState: Dispatch<SetStateAction<StateCampaignsType>>
 }
 
-const InfoCampaigns: React.FC<infoCampaignsProps> = ({ state, setState }) => {
+const InfoPageCampaigns: React.FC<infoCampaignsProps> = ({ state, setState }) => {
   const [open, setOpen] = useState<boolean>(false)
   const [selectedDDI, setSelectedDDI] = useState<DDIProps | null>(null)
 
@@ -182,4 +183,4 @@ const InfoCampaigns: React.FC<infoCampaignsProps> = ({ state, setState }) => {
   )
 }
 
-export default InfoCampaigns
+export default InfoPageCampaigns

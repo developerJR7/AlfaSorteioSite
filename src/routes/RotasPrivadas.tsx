@@ -1,13 +1,13 @@
 import { Sidebar } from '@/components/layout/sidebar'
-import Campanha from '@/pages/Campaigns'
-import Create from '@/pages/Campaigns/Create'
-import Home from '@/pages/Home'
-import Financas from '@/pages/Finance'
-import Promocoes from '@/pages/Promotions'
-import ConfigPromotions from '@/pages/Promotions/ConfigPromotions'
-import Relatorios from '@/pages/Reports'
-import Afiliados from '@/pages/Affiliate'
-import CreateAffiliates from '@/pages/Affiliate/CreateAffiliates'
+import CreateAffiliates from '@/pages/Affiliate/CreatePageAffiliates'
+import Afiliados from '@/pages/Affiliate/HomePageAffiliates'
+import Create from '@/pages/Campaigns/CreatePageCampaigns'
+import Campanha from '@/pages/Campaigns/HomePageCampaigns'
+import Financas from '@/pages/Finance/HomePageFinance'
+import Home from '@/pages/Home/HomePage'
+import CreatePromotions from '@/pages/Promotions/CreatePagePromotions'
+import Promocoes from '@/pages/Promotions/HomePagePromotions'
+import Relatorios from '@/pages/Reports/HomePageReports'
 import React from 'react'
 import { Navigate, Routes as ReactRoutes, Route } from 'react-router-dom'
 
@@ -27,9 +27,8 @@ export const RotasPrivadas: React.FC = () => {
 
         {/* Afiliados */}
         <Route path="/affiliates">
-          <Route index element={<Afiliados />} /> {/* Página inicial de afiliados */}
-          <Route path="create" element={<CreateAffiliates />} />{' '}
-          {/* Formulário de criação de afiliados */}
+          <Route index element={<Afiliados />} />
+          <Route path="create" element={<CreateAffiliates />} />
         </Route>
 
         {/* Finanças */}
@@ -38,7 +37,7 @@ export const RotasPrivadas: React.FC = () => {
         {/* Promotions */}
         <Route path="/promotions">
           <Route index element={<Promocoes />} />
-          <Route path="configpromotions" element={<ConfigPromotions />} />
+          <Route path="create" element={<CreatePromotions />} />
         </Route>
 
         {/* Relatórios */}

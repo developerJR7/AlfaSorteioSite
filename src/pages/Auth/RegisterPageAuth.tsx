@@ -1,25 +1,25 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import IconLeafClover from '@/components/icons/LeaftClover'
-import { ChevronDown, LoaderCircle } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
-import { useQuery } from 'react-query'
 import { api } from '@/api/Api'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import ImageHomemAlfaSorteios from '@/assets/homem_alfa_sorteios.png'
+import IconLeafClover from '@/components/icons/LeaftClover'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
-  CommandList,
-  CommandItem
+  CommandItem,
+  CommandList
 } from '@/components/ui/command'
-import ImageHomemAlfaSorteios from '@/assets/homem_alfa_sorteios.png'
-import { useRegister } from '@/hooks/useAuth'
+import { Input } from '@/components/ui/input'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { toast } from '@/components/ui/use-toast'
+import { useRegister } from '@/hooks/useAuth'
+import { cn } from '@/lib/utils'
+import { ChevronDown, LoaderCircle } from 'lucide-react'
+import React, { useState } from 'react'
+import { useQuery } from 'react-query'
+import { Link } from 'react-router-dom'
 
 interface DDIProps {
   pais: string
@@ -28,7 +28,7 @@ interface DDIProps {
   continente: string
 }
 
-const Register: React.FC = () => {
+const RegisterPageAuth: React.FC = () => {
   const { mutate: register, isLoading: loadingRegister } = useRegister()
   const [open, setOpen] = useState<boolean>(false)
   const [checked, setChecked] = useState<boolean>(false)
@@ -224,4 +224,4 @@ const Register: React.FC = () => {
   )
 }
 
-export default Register
+export default RegisterPageAuth

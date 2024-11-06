@@ -10,7 +10,7 @@ import {
   SelectValue
 } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
-import { StateCampaignsType } from '@/types/campaings'
+import { StateCampaignsType } from '@/types/CampaingType'
 import { Switch } from '@headlessui/react'
 import React, { Dispatch, SetStateAction } from 'react'
 
@@ -27,7 +27,10 @@ const LocationCampaigns = {
   outros: '4'
 }
 
-const ConfigCampaigns: React.FC<configCampaignsProps> = ({ state, setState }) => {
+const ConfigPageCampaigns: React.FC<configCampaignsProps> = ({
+  state,
+  setState
+}) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
     const file = e.target.files ? e.target.files[0] : null
@@ -347,4 +350,4 @@ const ConfigCampaigns: React.FC<configCampaignsProps> = ({ state, setState }) =>
   )
 }
 
-export default ConfigCampaigns
+export default ConfigPageCampaigns

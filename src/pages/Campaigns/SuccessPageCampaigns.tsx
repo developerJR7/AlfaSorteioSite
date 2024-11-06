@@ -1,6 +1,6 @@
 import IconRocket from '@/components/icons/Rocket'
 
-const CampaignsSuccess: React.FC = () => {
+const SuccessPageCampaigns: React.FC = () => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-col gap-4">
@@ -43,4 +43,4 @@ const CampaignsSuccess: React.FC = () => {
   )
 }
 
-export default CampaignsSuccess
+export default SuccessPageCampaigns

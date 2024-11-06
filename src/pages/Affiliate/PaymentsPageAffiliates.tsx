@@ -9,7 +9,7 @@ import {
 import { Separator } from '@/components/ui/separator'
 import React, { useState } from 'react'
 
-interface PaymentsAffiliatesProps {
+interface PaymentsPageAffiliatesProps {
   state: {
     name: string
     email: string
@@ -27,7 +27,7 @@ interface PaymentsAffiliatesProps {
   >
 }
 
-const PaymentsAffiliates: React.FC<PaymentsAffiliatesProps> = ({
+const PaymentsPageAffiliates: React.FC<PaymentsPageAffiliatesProps> = ({
   state,
   setState
 }) => {
@@ -139,4 +139,4 @@ const PaymentsAffiliates: React.FC<PaymentsAffiliatesProps> = ({
   )
 }
 
-export default PaymentsAffiliates
+export default PaymentsPageAffiliates

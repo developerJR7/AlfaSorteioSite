@@ -9,11 +9,8 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import { listCampaigns } from '@/hooks/campaingsApi'
+import { useCampaignsInfo } from '@/hooks/useCampaings'
 import React, { useState } from 'react'
-import { useQuery } from 'react-query'
-
-import { campaignsType } from '@/types/campaings'
 
 interface PromotionState {
   id_campaign: string
@@ -26,6 +23,7 @@ interface PromotionState {
 }
 
 const ConfigPromotions: React.FC = () => {
+  const { data: campaigns, isLoading, isError } = useCampaignsInfo()
   const [state, setState] = useState<PromotionState>({
     id_campaign: '',
     name: '',
@@ -34,18 +32,6 @@ const ConfigPromotions: React.FC = () => {
     end_date: '',
     min_quotas: 0,
     promotional_price: 0
-  })
-
-  const {
-    data: campaigns,
-    isLoading,
-    isError
-  } = useQuery<campaignsType[]>({
-    queryKey: 'campaigns',
-    queryFn: async () => {
-      const res = await listCampaigns()
-      return res
-    }
   })
 
   const handleSubmit = (e: React.FormEvent) => {

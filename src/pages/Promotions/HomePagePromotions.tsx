@@ -5,24 +5,14 @@ import { DataTable } from '@/components/Table'
 import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { toast } from '@/components/ui/use-toast'
-import { listPromotions } from '@/hooks/promotionsApi'
+import { usePromotionsInfo } from '@/hooks/usePromotions'
 import { ColumnsPromotions } from '@/pages/Promotions/ColumnsPromotions'
-import { PromotionStatetype } from '@/types/promotions'
 import React, { useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 
 const PromotionsList: React.FC = () => {
+  const { data: promotionsData, isLoading, isError } = usePromotionsInfo()
   const [activeTab, setActiveTab] = useState<'active' | 'closed'>('active')
-
-  const {
-    data: promotionsData,
-    isLoading,
-    isError
-  } = useQuery<PromotionStatetype[]>('promotions', async () => {
-    const res = await listPromotions()
-    return res
-  })
 
   useEffect(() => {
     if (isError) {
@@ -42,7 +32,7 @@ const PromotionsList: React.FC = () => {
         Promoções
       </h4>
       {isLoading ? (
-        <Skeleton className="h-8 w-5/12 max-w-[1330px] rounded-md" />
+        <Skeleton className="h-96 w-full max-w-[1330px] rounded-md" />
       ) : (
         <Card className="relative flex min-h-80 w-full flex-col p-4">
           <div className="mb-8 flex items-center">
@@ -83,7 +73,7 @@ const PromotionsList: React.FC = () => {
 
           <Link
             className="absolute right-4 top-4 rounded-lg bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-6 py-1 text-lg font-semibold text-[#3D3D3D] shadow-md transition-all duration-300 hover:text-white"
-            to={'/promotions/configpromotions'}
+            to={'/promotions/configurations'}
           >
             + Nova
           </Link>

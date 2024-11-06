@@ -2,19 +2,19 @@ import { IconTicket } from '@/components/icons'
 import { Container } from '@/components/layout/container'
 import { Button } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
-import { createCampaign } from '@/hooks/campaingsApi'
-import { StateCampaignsType } from '@/types/campaings'
+import { useCreateCampaigns } from '@/hooks/useCampaings'
+import { StateCampaignsType } from '@/types/CampaingType'
 import { ErrorResponse } from '@/types/ErrorResponse'
 import React, { useState } from 'react'
-import AwardsCampaigns from './AwardsCampaigns'
-import CampaignsSuccess from './CampaignsSuccess'
-import ConfigCampaigns from './ConfigCampaigns'
-import InfoCampaigns from './InfoCampaigns'
-import ReviewCampaigns from './ReviewCampaigns'
-import { Stepper } from './stepper'
+import AwardsPageCampaigns from './AwardsPageCampaigns'
+import ConfigPageCampaigns from './ConfigPageCampaigns'
+import InfoPageCampaigns from './InfoPageCampaigns'
+import ReviewPageCampaigns from './ReviewPageCampaigns'
+import StepperPageCampaigns from './StepperPageCampaigns'
+import SuccessPageCampaigns from './SuccessPageCampaigns'
 
-const Create: React.FC = () => {
-  const { mutate: campaign } = createCampaign()
+const CreatePageCampaigns: React.FC = () => {
+  const { mutate: campaign } = useCreateCampaigns()
   const [stateCampaigns, setStateCampaigns] = useState<StateCampaignsType>({
     step: 1,
     campaign_name: '',
@@ -96,21 +96,23 @@ const Create: React.FC = () => {
   const renderStepContent = () => {
     switch (stateCampaigns.step) {
       case 1:
-        return <InfoCampaigns state={stateCampaigns} setState={setStateCampaigns} />
+        return (
+          <InfoPageCampaigns state={stateCampaigns} setState={setStateCampaigns} />
+        )
       case 2:
         return (
-          <ConfigCampaigns state={stateCampaigns} setState={setStateCampaigns} />
+          <ConfigPageCampaigns state={stateCampaigns} setState={setStateCampaigns} />
         )
       case 3:
         return (
-          <AwardsCampaigns state={stateCampaigns} setState={setStateCampaigns} />
+          <AwardsPageCampaigns state={stateCampaigns} setState={setStateCampaigns} />
         )
       case 4:
         return (
-          <ReviewCampaigns state={stateCampaigns} setState={setStateCampaigns} />
+          <ReviewPageCampaigns state={stateCampaigns} setState={setStateCampaigns} />
         )
       case 5:
-        return <CampaignsSuccess />
+        return <SuccessPageCampaigns />
       default:
         return null
     }
@@ -125,7 +127,7 @@ const Create: React.FC = () => {
       <div className="flex h-dvh flex-col justify-between gap-4 rounded-xl border-2 border-[#A0AEC0] p-6 text-base">
         <div className="flex flex-col gap-4">
           {stateCampaigns.step < 5 && (
-            <Stepper
+            <StepperPageCampaigns
               key={stateCampaigns.step}
               currentStep={stateCampaigns.step}
               stepsControl={stepsControl}
@@ -171,4 +173,4 @@ const Create: React.FC = () => {
   )
 }
 
-export default Create
+export default CreatePageCampaigns

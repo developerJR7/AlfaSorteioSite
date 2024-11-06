@@ -9,3 +9,7 @@ export type PromotionStatetype = {
   min_quotas: number
   promotional_price: number
 }
+
+export type PromotionType = {
+  sales: PromotionStatetype[]
+}

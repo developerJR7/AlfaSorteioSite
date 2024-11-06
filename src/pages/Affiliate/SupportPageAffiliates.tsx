@@ -1,13 +1,13 @@
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
-import { CreateAffiliateState } from '@/hooks/affiliateApi'
+import { AffiliateStateType } from '@/types/AffiliateType'
 
 interface AffiliatesSupportProps {
-  state: CreateAffiliateState
-  setState: React.Dispatch<React.SetStateAction<CreateAffiliateState>>
+  state: AffiliateStateType
+  setState: React.Dispatch<React.SetStateAction<AffiliateStateType>>
 }
 
-const AffiliatesSupport: React.FC<AffiliatesSupportProps> = ({
+const SupportPageAffiliates: React.FC<AffiliatesSupportProps> = ({
   state,
   setState
 }) => {
@@ -55,4 +55,4 @@ const AffiliatesSupport: React.FC<AffiliatesSupportProps> = ({
   )
 }
 
-export default AffiliatesSupport
+export default SupportPageAffiliates

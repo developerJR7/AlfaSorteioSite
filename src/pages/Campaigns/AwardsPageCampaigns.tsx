@@ -1,7 +1,7 @@
 import SetAwards from '@/assets/SetAwards.svg'
 import IconUpload from '@/components/icons/Upload'
 import { Input } from '@/components/ui/input'
-import { StateCampaignsType } from '@/types/campaings'
+import { StateCampaignsType } from '@/types/CampaingType'
 import React, { Dispatch, SetStateAction } from 'react'
 
 interface AwardsCampaignsProps {
@@ -9,7 +9,10 @@ interface AwardsCampaignsProps {
   setState: Dispatch<SetStateAction<StateCampaignsType>>
 }
 
-const AwardsCampaigns: React.FC<AwardsCampaignsProps> = ({ state, setState }) => {
+const AwardsPageCampaigns: React.FC<AwardsCampaignsProps> = ({
+  state,
+  setState
+}) => {
   return (
     <div className="flex gap-8">
       <div className="flex flex-col gap-2">
@@ -149,4 +152,4 @@ const AwardsCampaigns: React.FC<AwardsCampaignsProps> = ({ state, setState }) =>
   )
 }
 
-export default AwardsCampaigns
+export default AwardsPageCampaigns

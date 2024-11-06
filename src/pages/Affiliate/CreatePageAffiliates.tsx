@@ -2,19 +2,20 @@ import { IconMoneyShare } from '@/components/icons'
 import { Container } from '@/components/layout/container'
 import { Button } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
-import { CreateAffiliateState, useCreateAffiliate } from '@/hooks/affiliateApi'
+import { useCreateAffiliate } from '@/hooks/useAffiliate'
+import { AffiliateStateType } from '@/types/AffiliateType'
 import { Dialog, DialogContent, DialogTitle } from '@radix-ui/react-dialog'
 import React, { useEffect, useState } from 'react'
-import AffiliatesRules from './AffiliateRules'
-import AffiliatesSupport from './AffiliatesSupport'
-import MarketingMaterials from './MarketingMaterials'
-import PaymentsAffiliates from './PaymentsAffiliates'
-import { Stepper } from './Stteper'
+import MarketingPageAffiliates from './MarketingPageAffiliates'
+import PaymentsPageAffiliates from './PaymentsPageAffiliates'
+import RulesPageAffiliates from './RulesPageAffiliates'
+import StepperPageAffiliates from './StepperPageAffiliates'
+import SupportPageAffiliates from './SupportPageAffiliates'
 
-const CreateAffiliates: React.FC = () => {
+const CreatePageAffiliates: React.FC = () => {
   const { mutate: createAffiliate, isLoading } = useCreateAffiliate()
 
-  const [affiliateState, setAffiliateState] = useState<CreateAffiliateState>({
+  const [affiliateState, setAffiliateState] = useState<AffiliateStateType>({
     step: 1,
     name: '',
     email: '',
@@ -53,19 +54,28 @@ const CreateAffiliates: React.FC = () => {
     switch (affiliateState.step) {
       case 1:
         return (
-          <PaymentsAffiliates state={affiliateState} setState={setAffiliateState} />
+          <PaymentsPageAffiliates
+            state={affiliateState}
+            setState={setAffiliateState}
+          />
         )
       case 2:
         return (
-          <MarketingMaterials state={affiliateState} setState={setAffiliateState} />
+          <MarketingPageAffiliates
+            state={affiliateState}
+            setState={setAffiliateState}
+          />
         )
       case 3:
         return (
-          <AffiliatesSupport state={affiliateState} setState={setAffiliateState} />
+          <SupportPageAffiliates
+            state={affiliateState}
+            setState={setAffiliateState}
+          />
         )
       case 4:
         return (
-          <AffiliatesRules state={affiliateState} setState={setAffiliateState} />
+          <RulesPageAffiliates state={affiliateState} setState={setAffiliateState} />
         )
       default:
         return <div>Etapa não encontrada</div>
@@ -85,7 +95,7 @@ const CreateAffiliates: React.FC = () => {
       <div className="flex h-dvh flex-col justify-between gap-4 rounded-xl border-2 border-[#A0AEC0] p-6 text-base">
         <div className="flex flex-col gap-4">
           {affiliateState.step < 5 && (
-            <Stepper
+            <StepperPageAffiliates
               key={affiliateState.step}
               currentStep={affiliateState.step}
               stepsControl={stepsControl}
@@ -133,4 +143,4 @@ const CreateAffiliates: React.FC = () => {
   )
 }
 
-export default CreateAffiliates
+export default CreatePageAffiliates

@@ -2,7 +2,7 @@ import { Container } from '@/components/layout/container'
 import { Card, CardTitle } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
-const Home: React.FC = () => {
+const HomePage: React.FC = () => {
   const flowHome = [
     { title: 'Visão Geral', type: 'left', variant: 'default' },
     { title: 'Indicadores Chaves de Desempenho', type: 'right', variant: 'default' },
@@ -48,4 +48,4 @@ const Home: React.FC = () => {
   )
 }
 
-export default Home
+export default HomePage

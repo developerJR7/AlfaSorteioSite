@@ -4,11 +4,11 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
-import { PromotionStatetype } from '@/types/PromotionType'
+import { PromotionType } from '@/types/PromotionType'
 import { ColumnDef } from '@tanstack/react-table'
 import { Trash2 } from 'lucide-react'
 
-export const ColumnsPromotions: ColumnDef<PromotionStatetype>[] = [
+export const ColumnsPromotions: ColumnDef<PromotionType>[] = [
   {
     accessorKey: 'name',
     header: () => 'Nome da Promoção',

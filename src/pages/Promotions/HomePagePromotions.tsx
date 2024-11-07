@@ -23,7 +23,6 @@ const PromotionsList: React.FC = () => {
       })
     }
   }, [isError])
-  console.log(promotionsData)
 
   return (
     <Container>
@@ -73,7 +72,7 @@ const PromotionsList: React.FC = () => {
 
           <Link
             className="absolute right-4 top-4 rounded-lg bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-6 py-1 text-lg font-semibold text-[#3D3D3D] shadow-md transition-all duration-300 hover:text-white"
-            to={'/promotions/configurations'}
+            to={'/promotions/create'}
           >
             + Nova
           </Link>

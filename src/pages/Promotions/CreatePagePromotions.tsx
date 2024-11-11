@@ -24,6 +24,7 @@ interface PromotionState {
 
 const ConfigPromotions: React.FC = () => {
   const { data: campaigns, isLoading, isError } = useCampaignsInfo()
+
   const [state, setState] = useState<PromotionState>({
     id_campaign: '',
     name: '',
@@ -37,6 +38,7 @@ const ConfigPromotions: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const { id_campaign, name, description } = state
+
     if (!id_campaign || !name || !description) {
       alert('Por favor, preencha todos os campos obrigatórios.')
       return
@@ -89,13 +91,11 @@ const ConfigPromotions: React.FC = () => {
                     Nenhuma campanha disponível
                   </SelectItem>
                 ) : (
-                  (campaigns ?? [])
-                    //.filter((campaign) => campaign.status === 'active')
-                    .map((campaign) => (
-                      <SelectItem key={campaign.id} value={campaign.id}>
-                        {campaign.name}
-                      </SelectItem>
-                    ))
+                  (campaigns ?? []).map((campaign) => (
+                    <SelectItem key={campaign.id} value={campaign.id}>
+                      {campaign.name}
+                    </SelectItem>
+                  ))
                 )}
               </SelectContent>
             </Select>
@@ -137,7 +137,6 @@ const ConfigPromotions: React.FC = () => {
               <Input
                 id="start_date"
                 type="date"
-                placeholder="Data de Início"
                 value={state.start_date}
                 onChange={handleChange}
                 className="bg-white shadow-sm"
@@ -151,7 +150,6 @@ const ConfigPromotions: React.FC = () => {
               <Input
                 id="end_date"
                 type="date"
-                placeholder="Data do Final"
                 value={state.end_date}
                 onChange={handleChange}
                 className="bg-white shadow-sm"
@@ -187,12 +185,15 @@ const ConfigPromotions: React.FC = () => {
             </div>
           </div>
 
-          <Button
-            type="submit"
-            className="h-10 w-32 rounded-md bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-4 py-2 font-semibold text-slate-950 transition-all duration-300 hover:text-white"
-          >
-            Avançar
-          </Button>
+          {/* Botão de submissão */}
+          <div className="mt-4 flex justify-end">
+            <Button
+              type="submit"
+              className="h-10 w-32 rounded-md bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-4 py-2 font-semibold text-slate-950 transition-all duration-300 hover:text-white"
+            >
+              Avançar
+            </Button>
+          </div>
         </form>
       </div>
     </Container>

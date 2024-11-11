@@ -8,9 +8,8 @@ import { Dialog, DialogContent, DialogTitle } from '@radix-ui/react-dialog'
 import React, { useEffect, useState } from 'react'
 import MarketingPageAffiliates from './MarketingPageAffiliates'
 import PaymentsPageAffiliates from './PaymentsPageAffiliates'
-import RulesPageAffiliates from './RulesPageAffiliates'
-import StepperPageAffiliates from './StepperPageAffiliates'
 import SupportPageAffiliates from './SupportPageAffiliates'
+import StepperPageAffiliates from './StepperPageAffiliates'
 
 const CreatePageAffiliates: React.FC = () => {
   const { mutate: createAffiliate, isLoading } = useCreateAffiliate()
@@ -26,8 +25,7 @@ const CreatePageAffiliates: React.FC = () => {
   const stepsControl = [
     { number: 1, text: 'Pagamentos e Comissões' },
     { number: 2, text: 'Materiais de Divulgação' },
-    { number: 3, text: 'Suporte para os Afiliados' },
-    { number: 4, text: 'Criar Regras para os Afiliados' }
+    { number: 3, text: 'Suporte para os Afiliados' }
   ]
 
   const handleCreateAffiliate = () => {
@@ -73,12 +71,8 @@ const CreatePageAffiliates: React.FC = () => {
             setState={setAffiliateState}
           />
         )
-      case 4:
-        return (
-          <RulesPageAffiliates state={affiliateState} setState={setAffiliateState} />
-        )
       default:
-        return <div>Etapa não encontrada</div>
+        return null
     }
   }
 
@@ -90,7 +84,7 @@ const CreatePageAffiliates: React.FC = () => {
     <Container>
       <h4 className="flex items-center gap-4 fill-[#255E17] text-xl font-semibold text-[#255E17]">
         <IconMoneyShare className="size-6" />
-        Afiliado
+        Afiliados
       </h4>
       <div className="flex h-dvh flex-col justify-between gap-4 rounded-xl border-2 border-[#A0AEC0] p-6 text-base">
         <div className="flex flex-col gap-4">
@@ -123,12 +117,12 @@ const CreatePageAffiliates: React.FC = () => {
               <Button
                 className="h-10 w-32 rounded-md bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-4 py-2 font-semibold text-slate-950 transition-all duration-300 hover:text-white"
                 onClick={() =>
-                  affiliateState.step === 4
+                  affiliateState.step === 3
                     ? handleCreateAffiliate()
                     : setAffiliateState((prev) => ({ ...prev, step: prev.step + 1 }))
                 }
               >
-                {affiliateState.step === 4 ? 'Finalizar Cadastro' : 'Avançar'}
+                {affiliateState.step === 3 ? 'Finalizar Cadastro' : 'Avançar'}
               </Button>
             </>
           )}

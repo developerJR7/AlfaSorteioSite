@@ -1,5 +1,5 @@
 import { api } from '@/api/Api'
-import { PromotionStatetype, PromotionType } from '@/types/PromotionType'
+import { PromotionStateType, PromotionType } from '@/types/PromotionType'
 import { useMutation, useQuery } from 'react-query'
 
 const usePromotionsInfo = () => {
@@ -10,7 +10,7 @@ const usePromotionsInfo = () => {
 }
 
 const useCreatePromotion = () => {
-  return useMutation(async (promotionData: PromotionStatetype) => {
+  return useMutation(async (promotionData: PromotionStateType) => {
     const { data } = await api.post('user/quotas/create_sale', promotionData)
     return data
   })

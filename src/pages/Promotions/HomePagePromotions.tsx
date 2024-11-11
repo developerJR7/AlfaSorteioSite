@@ -23,7 +23,6 @@ const PromotionsList: React.FC = () => {
       })
     }
   }, [isError])
-  console.log(promotionsData)
 
   return (
     <Container>

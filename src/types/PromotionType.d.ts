@@ -1,4 +1,4 @@
-export type PromotionStatetype = {
+export type PromotionStateType = {
   id_campaign: number
   id: number
   campaign_name: string

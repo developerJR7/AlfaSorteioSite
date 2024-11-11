@@ -1,5 +1,5 @@
 export type campaignsType = {
-  id: Key | null | undefined
+  id: number
   status: string
   created: string
   description: string

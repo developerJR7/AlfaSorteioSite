@@ -5,26 +5,28 @@ import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import { toast } from '@/components/ui/use-toast'
 import { useCampaignsInfo } from '@/hooks/useCampaings'
-import { useCreatePromotion } from '@/hooks/usePromotions'
-import { ErrorResponse } from '@/types/ErrorResponse'
-import { PromotionStateType } from '@/types/PromotionType'
-import { LoaderCircle } from 'lucide-react'
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useState } from 'react'
+
+interface PromotionState {
+  id_campaign: string
+  name: string
+  description: string
+  start_date: string
+  end_date: string
+  min_quotas: number
+  promotional_price: number
+}
 
 const ConfigPromotions: React.FC = () => {
   const { data: campaigns, isLoading, isError } = useCampaignsInfo()
-  const { mutate: createCampaigns, isLoading: loadCreate } = useCreatePromotion()
-  const [state, setState] = useState<PromotionStateType>({
-    id_campaign: 0,
-    id: 0,
-    campaign_name: '',
+
+  const [state, setState] = useState<PromotionState>({
+    id_campaign: '',
     name: '',
     description: '',
     start_date: '',
@@ -35,26 +37,23 @@ const ConfigPromotions: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    createCampaigns(state, {
-      onSuccess: (res: any) => {
-        console.log(res)
-        // setStateCampaigns((prev) => ({ ...prev, step: 5 }))
-      },
-      onError: (error: unknown) => {
-        const { response } = error as ErrorResponse
-        toast({
-          variant: 'destructive',
-          title: response.data.error,
-          description: 'repita o processo.'
-        })
-      }
-    })
+    const { id_campaign, name, description } = state
+
+    if (!id_campaign || !name || !description) {
+      alert('Por favor, preencha todos os campos obrigatórios.')
+      return
+    }
     console.log('Formulário enviado com sucesso')
   }
 
-  useEffect(() => {
-    console.log(state)
-  }, [state])
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target
+    setState((prevState: PromotionState) => ({
+      ...prevState,
+      [id]: value
+    }))
+  }
+
   return (
     <Container>
       <div className="flex h-dvh flex-col gap-2 rounded-xl border-2 border-[#A0AEC0] p-6 text-base">
@@ -67,41 +66,37 @@ const ConfigPromotions: React.FC = () => {
           className="flex flex-col gap-4 text-sm font-normal text-black"
         >
           <div className="flex flex-col gap-2">
-            <label htmlFor="campaign_select" className="font-bold">
+            <label htmlFor="id_campaign" className="font-bold">
               Selecione a Campanha*
             </label>
             <Select
-              value={state.campaign_name}
-              onValueChange={(e) => {
+              defaultValue={state.id_campaign}
+              onValueChange={(e) =>
                 setState({
                   ...state,
-                  campaign_name: e
+                  id_campaign: e
                 })
-              }}
+              }
             >
-              <SelectTrigger className="bg-white px-4 py-2 shadow-sm">
-                <SelectValue placeholder={'Selecione'}>
-                  {campaigns?.find((c) => c.id === state.id_campaign)?.description}
-                </SelectValue>
+              <SelectTrigger className="bg-white shadow-sm">
+                <SelectValue placeholder="Selecione uma campanha" />
               </SelectTrigger>
               <SelectContent>
-                <SelectGroup>
-                  {isLoading ? (
-                    <SelectItem value="loading">Carregando...</SelectItem>
-                  ) : isError ? (
-                    <SelectItem value="error">Erro ao carregar campanhas</SelectItem>
-                  ) : (campaigns ?? []).length === 0 ? (
-                    <SelectItem value="no-data">
-                      Nenhuma campanha disponível
+                {isLoading ? (
+                  <SelectItem value="loading">Carregando...</SelectItem>
+                ) : isError ? (
+                  <SelectItem value="error">Erro ao carregar campanhas</SelectItem>
+                ) : (campaigns ?? []).length === 0 ? (
+                  <SelectItem value="no-data">
+                    Nenhuma campanha disponível
+                  </SelectItem>
+                ) : (
+                  (campaigns ?? []).map((campaign) => (
+                    <SelectItem key={campaign.id} value={campaign.id.toString()}>
+                      {campaign.name}
                     </SelectItem>
-                  ) : (
-                    (campaigns ?? []).map((campaign, index) => (
-                      <SelectItem key={index} value={campaign.id.toString()}>
-                        {campaign.name}
-                      </SelectItem>
-                    ))
-                  )}
-                </SelectGroup>
+                  ))
+                )}
               </SelectContent>
             </Select>
           </div>
@@ -115,9 +110,7 @@ const ConfigPromotions: React.FC = () => {
               type="text"
               placeholder="Nome da Promoção"
               value={state.name}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setState({ ...state, name: e.target.value })
-              }
+              onChange={handleChange}
               className="bg-white shadow-sm"
             />
           </div>
@@ -131,9 +124,7 @@ const ConfigPromotions: React.FC = () => {
               type="text"
               placeholder="Descrição da Promoção"
               value={state.description}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setState({ ...state, description: e.target.value })
-              }
+              onChange={handleChange}
               className="bg-white shadow-sm"
             />
           </div>
@@ -146,11 +137,8 @@ const ConfigPromotions: React.FC = () => {
               <Input
                 id="start_date"
                 type="date"
-                placeholder="Data de Início"
                 value={state.start_date}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setState({ ...state, start_date: e.target.value })
-                }
+                onChange={handleChange}
                 className="bg-white shadow-sm"
               />
             </div>
@@ -162,11 +150,8 @@ const ConfigPromotions: React.FC = () => {
               <Input
                 id="end_date"
                 type="date"
-                placeholder="Data do Final"
                 value={state.end_date}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setState({ ...state, end_date: e.target.value })
-                }
+                onChange={handleChange}
                 className="bg-white shadow-sm"
               />
             </div>
@@ -180,9 +165,7 @@ const ConfigPromotions: React.FC = () => {
                 type="number"
                 placeholder="Quantidade Mínima"
                 value={state.min_quotas}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setState({ ...state, min_quotas: Number(e.target.value) })
-                }
+                onChange={handleChange}
                 className="bg-white shadow-sm"
               />
             </div>
@@ -196,25 +179,21 @@ const ConfigPromotions: React.FC = () => {
                 type="number"
                 placeholder="Preço Promocional"
                 value={state.promotional_price}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setState({ ...state, promotional_price: Number(e.target.value) })
-                }
+                onChange={handleChange}
                 className="bg-white shadow-sm"
               />
             </div>
           </div>
 
-          <Button
-            className="h-10 w-32 rounded-md bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-4 py-2 font-semibold text-slate-950 transition-all duration-300 hover:text-white"
-            type="submit"
-            disabled={Object.values(state).every((v) => !v)}
-          >
-            {loadCreate ? (
-              <LoaderCircle className="h-10 w-10 animate-spin text-white transition-transform" />
-            ) : (
-              'Avançar'
-            )}
-          </Button>
+          {/* Botão de submissão */}
+          <div className="mt-4 flex justify-end">
+            <Button
+              type="submit"
+              className="h-10 w-32 rounded-md bg-gradient-to-r from-[#FEEA8C] to-[#F9D94B] px-4 py-2 font-semibold text-slate-950 transition-all duration-300 hover:text-white"
+            >
+              Avançar
+            </Button>
+          </div>
         </form>
       </div>
     </Container>

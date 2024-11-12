@@ -11,7 +11,7 @@ const usePromotionsInfo = () => {
 
 const useCreatePromotion = () => {
   return useMutation(async (promotionData: PromotionStateType) => {
-    const { data } = await api.post('user/quotas/create_sales', promotionData)
+    const { data } = await api.post('user/quotas/create_sale', promotionData)
     return data
   })
 }
